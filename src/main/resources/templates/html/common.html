@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      class="pixel-ratio-2 retina">
+<head th:fragment="pagehead">
+    <meta charset="UTF-8">
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+    <script th:src="@{/layui/layui.js}"></script>
+</head>
+<body>
+<div th:fragment="header">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">BookLog</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">首页</a></li>
+            <li class="layui-nav-item"><a href="">JAVA</a></li>
+            <li class="layui-nav-item"><a href="">LINUX</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">分布式</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">并发</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">杂文</a>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" class="layui-nav-img">
+                    sane
+                </a>
+            </li>
+            <li class="layui-nav-item"><a href="">登出</a></li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<div th:fragment="footer">
+    <div class="layui-row">
+        <div class="layui-col-md12" style="text-align:center; color: #5FB878">
+            ©2020 muyushan<a href="http://www.beian.miit.gov.cn/" target="_blank">京ICP备20014790号</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

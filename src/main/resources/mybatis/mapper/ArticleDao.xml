@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sane.so2o.dao.ArticleDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sane.so2o.entity.Article">
+        <id column="article_id" property="article_id" />
+        <result column="article_name" property="article_name" />
+        <result column="article_time" property="article_time" />
+        <result column="article_ip" property="article_ip" />
+        <result column="article_click" property="article_click" />
+        <result column="sort_article_id" property="sort_article_id" />
+        <result column="user_id" property="user_id" />
+        <result column="type_id" property="type_id" />
+        <result column="article_type" property="article_type" />
+        <result column="article_content" property="article_content" />
+        <result column="article_up" property="article_up" />
+        <result column="article_support" property="article_support" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        article_id, article_name, article_time, article_ip, article_click, sort_article_id, user_id, type_id, article_type, article_content, article_up, article_support
+    </sql>
+
+
+    <select id="querytById" resultType="com.sane.so2o.entity.Article">
+        select * from article where article_id=#{id}
+    </select>
+</mapper>

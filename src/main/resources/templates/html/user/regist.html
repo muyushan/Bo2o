@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      class="pixel-ratio-2 retina">
+<head th:replace="common::pagehead">
+
+</head>
+
+
+<body class="layui-layout-body" style="background-color: whitesmoke;">
+<div class="layui-container">
+    <div class="layui-row" style="background-color: white; padding:100px 0px;">
+        <div class="layui-col-md4 layui-col-md-offset4" style="font-size: 18px;">
+            &nbsp;&nbsp;&nbsp;&nbsp;注册
+            <hr class="layui-bg-gray">
+        </div>
+        <div class="layui-col-md4 layui-col-md-offset4" style="font-size:15px;">
+            <form class="layui-form layui-form-pane" th:action="@{/user/regist}" th:method="POST">
+                <div class="layui-form-item" pane style="border: none;">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-block">
+                        <input type="text" placeholder="字母，数字组合，长度不小于6位" name="user_name" required lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" pane style="border: none;">
+                    <label class="layui-form-label">邮箱</label>
+                    <div class="layui-input-block">
+                        <input style="display: inline; width: 180px;" lay-verify="email" type="email" placeholder="输入邮箱" name="user_email" required class="layui-input">
+                        <button type="button" style="border: none;padding: 0 3px;margin: 0;" class="layui-btn layui-btn-normal">获取验证码</button>
+                    </div>
+                </div>
+                <div class="layui-form-item" pane style="border: none;">
+                    <label class="layui-form-label">验证码</label>
+                    <div class="layui-input-block">
+                        <input type="text" placeholder="输入验证码" name="email_verify_code" required lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" pane style="border: none;">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" placeholder="字母数字组合不少于6位" name="user_pwd" required lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" pane style="border: none;">
+                    <label class="layui-form-label">确认密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" placeholder="再次输入密码" name="user_pwd_verify" required lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+                <button lay-submit lay-filter="submit_btn" type="submit" class="layui-btn lay-submit layui-btn-fluid layui-btn-radius layui-btn-normal">注册</button>
+            </form>
+        </div>
+</div>
+
+<div class="layui-fluid" th:replace="common::footer">
+</div>
+</div>
+<script>
+    layui.use('form', function(){
+        debugger;
+        var form = layui.form;
+        form.on('submit(submit_btn)', function(data){
+            console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+            console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+            console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+            return true; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+
+
+        //各种基于事件的操作，下面会有进一步介绍
+    });
+</script>
+</body>
+
+</html>

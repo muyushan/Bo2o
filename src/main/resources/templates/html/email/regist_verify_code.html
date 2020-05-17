@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      class="pixel-ratio-2 retina">
+<head>
+    <meta charset="UTF-8">
+    <title>注册验证码</title>
+</head>
+<body>
+<!--/*@thymesVar id="verifyCode" type="java.lang.String"*/-->
+当你收到这封邮件时说明，你正在尝试注册SaneBlog系统，请将下面的这个注册码填入注册页面的验证码文本框中<br/>
+您的验证码:<span style="color: red;font-weight: bold;font-size: 18px;" th:text="${verifyCode}"></span>
+注意：该验证码有效期20分钟。超期需要重新申请
+<br/>
+感谢注册SaneBlog系统
+</body>
+</html>

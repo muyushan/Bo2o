@@ -50,6 +50,7 @@ public class MapperGenerateUtil {
         StrategyConfig strategyConfig=new StrategyConfig();
         strategyConfig.setCapitalMode(true);
         strategyConfig.setEntityLombokModel(true);
+        strategyConfig.setInclude("user");
 
         DataSourceConfig dataSourceConfig=new DataSourceConfig();
         dataSourceConfig.setDbType(DbType.MYSQL);

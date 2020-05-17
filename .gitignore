@@ -29,3 +29,14 @@ build/
 
 ### VS Code ###
 .vscode/
+/repository/
+/.mvn/
+.mvn/
+src/main/.DS_Store
+src/main/java/.DS_Store
+src/main/java/com/.DS_Store
+src/main/java/com/sane/.DS_Store
+src/main/java/com/sane/so2o/.DS_Store
+src/main/resources/.DS_Store
+src/main/resources/mybatis/.DS_Store
+src/main/resources/templates/.DS_Store

@@ -64,3 +64,13 @@ function showImg(obj) {
 	}
 
 }
+
+function showloading(){
+	layer.open({
+		type: 3
+	});
+}
+
+function closeloading(){
+	layer.closeAll('loading');
+}

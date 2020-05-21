@@ -16,11 +16,9 @@ public class FirstController {
     private AreaService areaService;
     @Autowired
     private IArticleService articleService;
-@RequestMapping("/first")
-@ResponseBody
-    public  Object first(){
-    List<Area> areaList=areaService.queryAreaList();
-    return  areaList;
+@RequestMapping("/login")
+    public  String login(){
+    return  "login";
     }
     @RequestMapping("/index")
     public String index(){

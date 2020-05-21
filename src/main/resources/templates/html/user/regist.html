@@ -10,11 +10,11 @@
 <div class="layui-container">
     <div class="layui-row" style="background-color: white; padding:100px 0px;">
         <div class="layui-col-md4 layui-col-md-offset4" style="font-size: 18px;">
-            &nbsp;&nbsp;&nbsp;&nbsp;注册
+            &nbsp;&nbsp;&nbsp;&nbsp;注册&nbsp;&nbsp;<i class="layui-icon layui-icon-face-smile" style="font-size: 18px; color: #1E9FFF;"></i>
             <hr class="layui-bg-gray">
         </div>
         <div class="layui-col-md4 layui-col-md-offset4" style="font-size:15px;">
-            <form class="layui-form layui-form-pane" th:action="@{/user/regist}" th:method="POST">
+            <form class="layui-form layui-form-pane">
                 <div class="layui-form-item" pane style="border: none;">
                     <label class="layui-form-label">用户名</label>
                     <div class="layui-input-block">
@@ -47,7 +47,9 @@
                     </div>
                 </div>
                 <button lay-submit lay-filter="submit_btn" type="submit" class="layui-btn lay-submit layui-btn-fluid layui-btn-radius layui-btn-normal">注册</button>
+                <div onclick="gologin()" id="tologin"  style="display:none;font-size:18px;text-align: center;cursor: pointer;padding-top:10px;"><i class="layui-icon layui-icon-face-smile" style="font-size: 18px; color: #1E9FFF;"></i>令牌在手，随我游走<i class="layui-icon layui-icon-face-smile" style="font-size: 18px; color: #1E9FFF;"></i></div>
             </form>
+
         </div>
 </div>
 
@@ -60,10 +62,30 @@
         $=layui.jquery;
         var form = layui.form;
         form.on('submit(submit_btn)', function(data){
-            console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
-            console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+            // console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+            // console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
             console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-            return true; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            var url=basePath+"user/regist";
+            showloading();
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: url,
+                data: data.field,
+                cache: false,
+                async: true,
+                success:function (data) {
+                    closeloading();
+                    if(data.code=="200"){
+                        layer.msg(data.message);
+                       document.getElementsByClassName("layui-form")[0].reset();
+                        $("#tologin").toggle();
+                    }else{
+                        layer.msg(data.message);
+                    }
+                }
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
         $("button[lay-filter='sendVerifyCode']").click(function(){
             var userEmail=$("input[name='user_email']").val();
@@ -72,6 +94,7 @@
                 layer.msg('请填写邮箱');
             }else{
                 var url=basePath+"user/sendregistcode";
+                showloading();
                 $.ajax({
                     type: 'post',
                     dataType: 'json',
@@ -80,11 +103,12 @@
                     cache: false,
                     async: true,
                     success:function (data) {
+                        closeloading();
                         if(data.code=="200"){
                             layer.msg(data.message);
-                            $(this).attr("disabled",true);
                         }else{
                             layer.msg(data.message);
+
                         }
                     }
                 });
@@ -101,12 +125,20 @@
     });
     function verifyUserName(username){
         var url=basePath+"user/validate/"+username;
+        showloading();
         $.get(url,function (data) {
+            closeloading();
             if(data.code!="200"){
                 layer.msg(data.message);
                 $("input[name='user_name']").select();
             }
         });
+    }
+
+    function gologin() {
+        var url=basePath+"login";
+        window.location.href=url;
+
     }
 
 

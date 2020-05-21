@@ -72,7 +72,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements IUser
                 retValue.setCode(RetCodeEnum.FAIL.getCode());
                 retValue.setMessage("验证码发送失败,请重试");
             }else{
-                retValue.setMessage("验证码发送成功，请在"+expire+"分钟内完成注册");
+                retValue.setMessage("系统将尝试向您的邮箱发送验证码，请在"+expire+"分钟内完成注册");
                 retValue.setCode(RetCodeEnum.SUCCESS.getCode());
             }
         }catch (Exception ex){
@@ -122,8 +122,10 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements IUser
         }else{
             if(userUD.insert()){
                 retValue.setCode(RetCodeEnum.SUCCESS.getCode());
+                retValue.setMessage("注册成功");
             }else{
                 retValue.setCode(RetCodeEnum.FAIL.getCode());
+                retValue.setMessage("注册失败，请重试");
             }
         }
         return retValue;

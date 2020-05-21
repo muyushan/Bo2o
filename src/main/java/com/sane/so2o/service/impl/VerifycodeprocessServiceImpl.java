@@ -9,15 +9,18 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sane.so2o.service.MailSenderService;
 import com.sane.so2o.service.RedisService;
 import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.mail.SendFailedException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -28,6 +31,7 @@ import java.util.concurrent.TimeUnit;
  * @author 母玉山
  * @since 2020-05-21
  */
+@Slf4j
 @Service
 public class VerifycodeprocessServiceImpl extends ServiceImpl<VerifycodeprocessDao, Verifycodeprocess> implements IVerifycodeprocessService {
     @Value("${so2o.regist.verifycode.expire}")
@@ -41,6 +45,7 @@ public class VerifycodeprocessServiceImpl extends ServiceImpl<VerifycodeprocessD
     @Override
     @Transactional
     public void processSendRegistCode() {
+        log.info("开始执行发送验证码的job");
         QueryWrapper<Verifycodeprocess> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("deal_flag",0);
         List<Verifycodeprocess> unprocessList=list(queryWrapper);
@@ -60,9 +65,13 @@ public class VerifycodeprocessServiceImpl extends ServiceImpl<VerifycodeprocessD
                         verifycodeprocess.updateById();
                     }
                 } catch (MessagingException e) {
-                    e.printStackTrace();
+                    log.info("向邮箱:{}发送验证码邮件失败:{}",verifycodeprocess.getEmail(),e);
+                } catch (SendFailedException e){
+                    log.info("向邮箱:{}发送验证码邮件失败:{}",verifycodeprocess.getEmail(),e);
                 } catch (javax.mail.MessagingException e) {
-                    e.printStackTrace();
+                    log.info("向邮箱:{}发送验证码邮件失败:{}",verifycodeprocess.getEmail(),e);
+                }catch (Exception e){
+                    log.info("向邮箱:{}发送验证码邮件失败:{}",verifycodeprocess.getEmail(),e);
                 }
             });
         }

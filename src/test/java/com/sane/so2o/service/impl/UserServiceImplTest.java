@@ -28,16 +28,11 @@ public  class UserServiceImplTest extends BaseTest {
         userUD.setUser_pwd("566788");
         userUD.setUser_email("muyushanm@126.com");
         userUD.setUser_name("muys2");
-        userUD.setEmail_verify_code("40K0LK");
+        userUD.setEmail_verify_code("COGN02");
         userUD.setUser_pwd_verify("566788");
        RetValue retValue=userService.registUserInfo(userUD);
        Assert.assertEquals("200",retValue.getCode());
        log.info(retValue.getMessage());
     }
 
-    @Test
-    public void sendEmailVerifyCode() {
-
-        RetValue retValue=userService.sendEmailVerifyCode("muys2","muyushanm@126.com");
-    }
 }

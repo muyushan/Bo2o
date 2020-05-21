@@ -5,7 +5,15 @@
     <link rel="icon" th:href="@{/images/favicon.ico}">
     <link rel="stylesheet" th:href="@{/css/common.css}">
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
-    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/layui/layui.js}">
+    </script>
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        basePath = /*[[@{/}]]*/ '';
+        /*]]>*/
+    </script>
+
+
 </head>
 <body>
 <div th:fragment="header">
@@ -46,5 +54,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>

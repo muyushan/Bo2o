@@ -9,6 +9,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.annotation.PostConstruct;
+import java.util.Date;
 import java.util.TimeZone;
 
 
@@ -21,5 +23,11 @@ public class So2oApplication {
         SpringApplication.run(So2oApplication.class, args);
     }
 
-
+//    @PostConstruct
+//    public void setDefaultTimeZone(){
+//        TimeZone.getDefault();
+//        System.out.println(new Date());
+//        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+//    }
 }
+

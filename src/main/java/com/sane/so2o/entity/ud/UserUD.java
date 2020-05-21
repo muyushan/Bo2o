@@ -9,7 +9,7 @@ public class UserUD extends User {
     private String email_verify_code;
 
     public String getKey(){
-        return "regist:"+getUser_name()+":"+getUser_email();
+        return "user::"+getUser_email();
     }
 
 

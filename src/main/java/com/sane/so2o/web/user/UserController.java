@@ -8,6 +8,7 @@ import com.sane.so2o.enums.RetCodeEnum;
 import com.sane.so2o.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
@@ -39,15 +40,12 @@ public class UserController {
     public RetValue<User> registPost(UserUD user) {
         log.info(user.toString());
         RetValue<User> retValue=new RetValue();
-
-        retValue.setCode(RetCodeEnum.SUCCESS.getCode());
-        retValue.setCode(RetCodeEnum.SUCCESS.getMessage());
-        retValue.setData(user);
+        retValue=userService.registUserInfo(user);
         return retValue;
     }
-    @RequestMapping("/validate")
+    @RequestMapping("/validate/{userName}")
     @ResponseBody
-    public RetValue validateUserName(String userName){
+    public RetValue validateUserName(@PathVariable String userName){
         RetValue retValue=new RetValue();
         if(userService.userNameExist(userName)){
             retValue.setCode(RetCodeEnum.FAIL.getCode());

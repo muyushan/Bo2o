@@ -24,13 +24,13 @@ public class MailSenderServiceTest extends BaseTest {
 
     @Test
     public void testSendTextEmail(){
-        mailSenderService.sendSimpleTextMail("muyushanm@126.com","test","tttt");
+        mailSenderService.sendSimpleTextMail("muyushanm@126.com","测试邮件时间","测试内容");
     }
     @Test
     public void testSendTemplateEmail() throws MessagingException, javax.mail.MessagingException {
         Map<String,Object>map=new HashMap<>();
         map.put("verifyCode",producer.createText());
-        mailSenderService.sendTemplateMail("muyushanm@126.com","test",map,"/email/regist_verify_code");
+        mailSenderService.sendTemplateMail("917763727@qq.com","测试邮件时间",map,"/email/regist_verify_code");
     }
 
     @Test

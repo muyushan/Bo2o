@@ -11,7 +11,7 @@ import com.sane.so2o.entity.ud.UserUD;
  * </p>
  *
  * @author 母玉山
- * @since 2020-05-16
+ * @since 2020-05-21
  */
 public interface IUserService extends IService<User> {
 

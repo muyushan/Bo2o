@@ -2,8 +2,10 @@ package com.sane.so2o.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.code.kaptcha.Producer;
+import com.sane.so2o.dao.VerifycodeprocessDao;
 import com.sane.so2o.entity.User;
 import com.sane.so2o.dao.UserDao;
+import com.sane.so2o.entity.Verifycodeprocess;
 import com.sane.so2o.entity.ud.RetValue;
 import com.sane.so2o.entity.ud.UserUD;
 import com.sane.so2o.enums.RetCodeEnum;
@@ -17,9 +19,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
@@ -36,6 +40,7 @@ import java.util.concurrent.TimeUnit;
  * @author 母玉山
  * @since 2020-05-16
  */
+//@Configuration
 @Slf4j
 @Service
 public class UserServiceImpl extends ServiceImpl<UserDao, User> implements IUserService {
@@ -46,6 +51,9 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements IUser
     private Producer producer;
     @Autowired
     private MailSenderService mailSenderService;
+    @Value("${so2o.regist.verifycode.expire}")
+    private int expire;
+
     @Override
     public Boolean userNameExist(String userName) {
         QueryWrapper<User> queryWrapper=new QueryWrapper<>();
@@ -55,27 +63,27 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements IUser
 
     @Override
     public RetValue sendEmailVerifyCode(String userName, String emailAddress) {
-        String verifyCode=producer.createText();
+
         RetValue retValue=new RetValue();
-        Map<String,Object> contextMap=new HashMap<>();
-        contextMap.put("verifyCode",verifyCode);
         try{
-            mailSenderService.sendTemplateMail(emailAddress,"SaneBlog注册验证码",contextMap,"/email/regist_verify_code");
-            boolean result=redisService.set("regist:"+userName+":"+emailAddress,verifyCode, TimeUnit.MINUTES.toSeconds(20));
-            if(!result){
+            Verifycodeprocess verifycodeprocess=new Verifycodeprocess();
+            verifycodeprocess.setEmail(emailAddress);
+            if(!verifycodeprocess.insert()){
                 retValue.setCode(RetCodeEnum.FAIL.getCode());
                 retValue.setMessage("验证码发送失败,请重试");
             }else{
+                retValue.setMessage("验证码发送成功，请在"+expire+"分钟内完成注册");
                 retValue.setCode(RetCodeEnum.SUCCESS.getCode());
             }
         }catch (Exception ex){
             retValue.setCode(RetCodeEnum.FAIL.getCode());
             retValue.setMessage("验证码发送失败,请重试");
         }
+
         return retValue;
     }
 
-//    @CacheEvict(key ="#p0.getKey()")
+    @CacheEvict(value = "user",key ="#p0.user_email")
     @Override
     public RetValue registUserInfo(UserUD userUD) {
         String verifyCode="";
@@ -114,14 +122,10 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements IUser
         }else{
             if(userUD.insert()){
                 retValue.setCode(RetCodeEnum.SUCCESS.getCode());
-                if(redisService.hasKey(userUD.getKey())){
-                    redisService.del(userUD.getKey());
-                }
             }else{
                 retValue.setCode(RetCodeEnum.FAIL.getCode());
             }
         }
-
         return retValue;
     }
 

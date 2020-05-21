@@ -68,6 +68,7 @@ public class MailSenderServiceImpl implements MailSenderService {
         // true 为 HTML 邮件
         messageHelper.setText(content, true);
         mailSender.send(message);
+
         log.info("【HTML 邮件】成功发送！to={}", to);
     }
 

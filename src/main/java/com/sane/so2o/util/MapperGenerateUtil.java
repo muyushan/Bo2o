@@ -30,7 +30,7 @@ public class MapperGenerateUtil {
         globalConfig.setAuthor("母玉山");
         String projectPath = System.getProperty("user.dir");
         globalConfig.setOutputDir(projectPath + "/src/main/java");
-        globalConfig.setFileOverride(true);
+        globalConfig.setFileOverride(false);//避免覆盖
         globalConfig.setOpen(true);
         globalConfig.setEnableCache(false);
         globalConfig.setActiveRecord(true);
@@ -45,12 +45,13 @@ public class MapperGenerateUtil {
         packageConfig.setEntity("entity");
         packageConfig.setMapper("dao");
         packageConfig.setXml("dao.xml");
+        packageConfig.setController("web");
         packageConfig.setParent("com.sane.so2o");
 
         StrategyConfig strategyConfig=new StrategyConfig();
         strategyConfig.setCapitalMode(true);
         strategyConfig.setEntityLombokModel(true);
-        strategyConfig.setInclude("user");
+        strategyConfig.setInclude("verifycodeprocess");//设置要生成的表明
 
         DataSourceConfig dataSourceConfig=new DataSourceConfig();
         dataSourceConfig.setDbType(DbType.MYSQL);

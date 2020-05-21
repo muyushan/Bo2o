@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sane.so2o.dao.UserDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sane.so2o.entity.User">
+        <id column="user_id" property="user_id" />
+        <result column="group_id" property="group_id" />
+        <result column="user_name" property="user_name" />
+        <result column="user_pwd" property="user_pwd" />
+        <result column="user_phone" property="user_phone" />
+        <result column="user_sex" property="user_sex" />
+        <result column="user_qq" property="user_qq" />
+        <result column="user_email" property="user_email" />
+        <result column="user_address" property="user_address" />
+        <result column="user_mark" property="user_mark" />
+        <result column="user_rank_id" property="user_rank_id" />
+        <result column="user_last_login_ip" property="user_last_login_ip" />
+        <result column="user_birthday" property="user_birthday" />
+        <result column="user_description" property="user_description" />
+        <result column="user_image_url" property="user_image_url" />
+        <result column="user_school" property="user_school" />
+        <result column="user_register_time" property="user_register_time" />
+        <result column="user_register_ip" property="user_register_ip" />
+        <result column="user_last_update_time" property="user_last_update_time" />
+        <result column="user_weibo" property="user_weibo" />
+        <result column="user_blood_type" property="user_blood_type" />
+        <result column="user_says" property="user_says" />
+        <result column="user_lock" property="user_lock" />
+        <result column="user_freeze" property="user_freeze" />
+        <result column="user_power" property="user_power" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_id, group_id, user_name, user_pwd, user_phone, user_sex, user_qq, user_email, user_address, user_mark, user_rank_id, user_last_login_ip, user_birthday, user_description, user_image_url, user_school, user_register_time, user_register_ip, user_last_update_time, user_weibo, user_blood_type, user_says, user_lock, user_freeze, user_power
+    </sql>
+
+</mapper>

@@ -1,11 +1,18 @@
 
 .layui-logo{color: #5FB878!important;}
-.layui-layout-admin .layui-header{background-color: white !important;}
+.layui-layout-admin .layui-header{background-color: white !important;
+    border-bottom:1px solid #5FB878;
+}
 .layui-nav .layui-nav-item a {color: #0C0C0C !important;}
 .layui-nav .layui-nav-item a:hover{color:#5FB878!important;}
 .layui-nav .layui-nav-item:hover{background-color:#F0F0F0!important;}
 .commonbg{background-color: #eeeeee;}
 .fontsize15{font-size:20px;}
-.main-content {background-color: #eeeeee;min-height:600px;}
+.main-content {background-color: #eeeeee;min-height:600px; max-height: 600px; overflow: scroll;}
 .right-slider {background-color: #f2f2f2;min-height:600px;}
 .layui-fluid{padding: 0 0 !important;}
+.layui-card{border: 1px solid white;margin-bottom: 0!important;margin-top: 5px !important; cursor: pointer;}
+.layui-card:hover{border: 1px solid #5FB878;}
+.layui-card-header{border-bottom: 1px solid #5fb87847!important; font-weight: bold;}
+.layui-card-fotter{padding-left: 5px;}
+.layui-icon{font-size:13px!important; margin-left:10px;cursor: pointer;}

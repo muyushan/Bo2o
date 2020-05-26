@@ -24,6 +24,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
@@ -53,6 +54,8 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements IUser
     private MailSenderService mailSenderService;
     @Value("${so2o.regist.verifycode.expire}")
     private int expire;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Boolean userNameExist(String userName) {
@@ -120,6 +123,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements IUser
             retValue.setMessage("注册验证码不正确，请确认输入的内容");
             retValue.setCode(RetCodeEnum.FAIL.getCode());
         }else{
+           userUD.setUser_pwd(passwordEncoder.encode(userUD.getUser_pwd()));
             if(userUD.insert()){
                 retValue.setCode(RetCodeEnum.SUCCESS.getCode());
                 retValue.setMessage("注册成功");

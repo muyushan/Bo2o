@@ -6,6 +6,7 @@ import com.sane.so2o.service.IArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -16,9 +17,13 @@ public class FirstController {
     private AreaService areaService;
     @Autowired
     private IArticleService articleService;
-@RequestMapping("/login")
-    public  String login(){
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    public  String loginPage(){
     return  "login";
+    }
+    @RequestMapping(value = "/signup",method = RequestMethod.GET)
+    public String showRegist() {
+        return "/user/regist";
     }
     @RequestMapping("/index")
     public String index(){

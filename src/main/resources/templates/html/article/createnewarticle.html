@@ -14,30 +14,62 @@
 
 <div th:replace="common.html::header"></div>
 <div class="layui-fluid">
+    <form class="layui-form" th:action="@{article/save}">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md5">
+            <input th:id="article_title" type="text" name="article_title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-col-md3">
+            <select name="city" lay-verify="">
+                <option value="">请选择一个分类</option>
+                <option value="010">Java</option>
+                <option value="021">Linux</option>
+                <option value="0571">分布式</option>
+                <option value="0572">并发</option>
+                <option value="0573">杂文</option>
+            </select>
+        </div>
+        <div class="layui-col-md1">
+            <input type="checkbox" name="zzz" lay-skin="switch" checked lay-text="公开|私有">
+        </div>
+        <div class="layui-col-md1">
+            <button type="button" style="display: inline;" th:id="saveBtn" class="layui-btn  layui-btn-normal layui-btn-radius">保存</button>
+        </div>
     <div class="layui-row">
-        <div class="layui-col-md12 main-content">
-            <div id="test-editor">
+        <div class="layui-col-md12 layui-btn-fluid">
+            <div id="editor">
     <textarea style="display:none;">### 关于 Editor.md
 
 **Editor.md** 是一款开源的、可嵌入的 Markdown 在线编辑器（组件），基于 CodeMirror、jQuery 和 Marked 构建。
     </textarea>
-            </div>            <script type="text/javascript" th:inline="javascript">
-                /*<![CDATA[*/
-                ctxPath = /*[[@{/}]]*/ '';
-                /*]]>*/
+            </div>
+            <script type="text/javascript" th:inline="javascript">
                 $(function() {
-                    var editor = editormd("test-editor", {
+                    var editor = editormd("editor", {
                         width  : "100%",
-                        height : "100%",
-                        path   : ctxPath+"/mdeditor/lib/"
+                        height : 500,
+                        path   : basePath+"mdeditor/lib/"
                     });
+                    $("#saveBtn").click(function(){
+                        var title=$("#article_title").val();
+                        var content=editor.getMarkdown();
+                        showloading();
+                        $.post(basePath+"article/save",{article_name:title,article_content:content},function(data){
+                            if(data.code=="200"){
+                                layer.msg('保存完成');
+                                closeloading();
+                            }
+                        })
+                    });
+
                 });
             </script>
         </div>
     </div>
 </div>
-
+    </form>
 <div class="layui-fluid" th:replace="common::footer">
+</div>
 </div>
 </body>
 

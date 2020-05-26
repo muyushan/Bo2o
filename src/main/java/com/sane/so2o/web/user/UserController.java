@@ -30,10 +30,7 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
-    @RequestMapping(value = "/regist",method = RequestMethod.GET)
-    public String showRegist() {
-        return "/user/regist";
-    }
+
 
     @ResponseBody
     @RequestMapping(value = "/regist",method = RequestMethod.POST)

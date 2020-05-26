@@ -4,28 +4,83 @@
 <head th:replace="common::pagehead">
 
 </head>
-<body class="layui-layout-body" style="overflow: scroll;">
-<div th:replace="common.html::header"></div>
-<div class="layui-fluid">
-    <div class="layui-row">
-        <div class="layui-col-md9 main-content">
-            登录页面
-        </div>
-        <div class="layui-col-md3 right-slider">
-            你的内容 3/12
-        </div>
-    </div>
-</div>
-<div class="layui-fluid" th:replace="common::footer">
 
+
+<body class="layui-layout-body" style="background-color: whitesmoke;">
+<div th:replace="common.html::header"></div>
+<div class="layui-container" style="margin-top: 40px;">
+    <div class="layui-row" style="background-color: white; padding:100px 0px;">
+        <div class="layui-col-md4 layui-col-md-offset4" style="font-size: 18px;">
+            &nbsp;&nbsp;&nbsp;&nbsp;登录&nbsp;&nbsp;<i class="layui-icon layui-icon-face-smile" style="font-size: 18px; color: #1E9FFF;"></i>
+            <hr class="layui-bg-gray">
+        </div>
+        <div class="layui-col-md4 layui-col-md-offset4" style="font-size:15px;">
+            <form class="layui-form layui-form-pane" th:method="post" th:action="@{/login}" >
+                <div class="layui-form-item" pane style="border: none;">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="username" required lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item" pane style="border: none;">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-block">
+                        <input type="password"  name="password" required lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" pane style="border: none;">
+                    <label class="layui-form-label">登录记忆</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="remember-me" lay-skin="switch" lay-text="开启|关闭" style="margin-bottom:15px; ">
+                    </div>
+                </div>
+                <button lay-submit lay-filter="submit_btn" type="submit" class="layui-btn lay-submit layui-btn-fluid layui-btn-radius layui-btn-normal">登录</button>
+                <center>忘记密码？</center>
+            </form>
+
+        </div>
 </div>
-<ul class="layui-fixbar"><li class="layui-icon layui-fixbar-top" lay-type="top" style="display: list-item;"></li></ul>
+
+<div class="layui-fluid" th:replace="common::footer">
+</div>
+</div>
 <script>
-    //一般直接写在一个js文件中
-    layui.use(['layer', 'form'], function(){
-        var layer = layui.layer
-            ,form = layui.form;
-        layer.msg('Hello World');
+    var $;
+    layui.use('form', function(){
+        $=layui.jquery;
+        var form = layui.form;
+        // form.on('submit(submit_btn)', function(data){
+        //     console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+        //     var url=basePath+"user/regist";
+        //     showloading();
+        //     $.ajax({
+        //         type: 'post',
+        //         dataType: 'json',
+        //         url: url,
+        //         data: data.field,
+        //         cache: false,
+        //         async: true,
+        //         success:function (data) {
+        //             closeloading();
+        //             if(data.code=="200"){
+        //                 layer.msg(data.message);
+        //                document.getElementsByClassName("layui-form")[0].reset();
+        //                 $("#tologin").toggle();
+        //             }else{
+        //                 layer.msg(data.message);
+        //             }
+        //         }
+        //     });
+        //     return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        // });
+
+        $("input[name='user_name']").blur(function(){
+            var userName=$("input[name='user_name']").val();
+            if(userName==null||userName==''){
+                layer.msg('请填写用户名');
+            }
+        });
     });
 </script>
 </body>

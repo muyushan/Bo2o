@@ -15,8 +15,6 @@ import java.util.TimeZone;
 
 
 @SpringBootApplication(scanBasePackages ={"com.sane.so2o"})
-@MapperScan("com.sane.so2o.dao")
-@EnableTransactionManagement
 public class So2oApplication {
     public static void main(String[] args)
     {

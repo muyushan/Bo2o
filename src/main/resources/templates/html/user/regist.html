@@ -66,7 +66,6 @@
             // console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
             console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
             var url=basePath+"user/regist";
-            showloading();
             $.ajax({
                 type: 'post',
                 dataType: 'json',
@@ -75,7 +74,6 @@
                 cache: false,
                 async: true,
                 success:function (data) {
-                    closeloading();
                     if(data.code=="200"){
                         layer.msg(data.message);
                        document.getElementsByClassName("layui-form")[0].reset();
@@ -94,7 +92,6 @@
                 layer.msg('请填写邮箱');
             }else{
                 var url=basePath+"user/sendregistcode";
-                showloading();
                 $.ajax({
                     type: 'post',
                     dataType: 'json',
@@ -103,7 +100,6 @@
                     cache: false,
                     async: true,
                     success:function (data) {
-                        closeloading();
                         if(data.code=="200"){
                             layer.msg(data.message);
                         }else{
@@ -125,9 +121,7 @@
     });
     function verifyUserName(username){
         var url=basePath+"user/validate/"+username;
-        showloading();
         $.get(url,function (data) {
-            closeloading();
             if(data.code!="200"){
                 layer.msg(data.message);
                 $("input[name='user_name']").select();

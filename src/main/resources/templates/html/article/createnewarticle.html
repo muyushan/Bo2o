@@ -53,11 +53,9 @@
                     $("#saveBtn").click(function(){
                         var title=$("#article_title").val();
                         var content=editor.getMarkdown();
-                        showloading();
                         $.post(basePath+"article/save",{article_name:title,article_content:content},function(data){
                             if(data.code=="200"){
                                 layer.msg('保存完成');
-                                closeloading();
                             }
                         })
                     });

@@ -40,14 +40,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/js/**","/css/**","/images/**","/layui/**","/mdeditor/**","/signup","/user/validate/*","/user/regist","/user/sendregistcode")
+                .antMatchers("/js/**","/css/**","/images/**","/layui/**","/mdeditor/**","/signup","/redirectindex","/index","/user/validate/*","/user/regist","/user/sendregistcode","/article/list")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .permitAll().successForwardUrl("/index").
+                .permitAll().successForwardUrl("/redirectindex").
                 and().logout().logoutSuccessUrl("/index")
                 .invalidateHttpSession(true).clearAuthentication(true)
                 .and().rememberMe().key(saltkey).userDetailsService(userDetailsService).and()

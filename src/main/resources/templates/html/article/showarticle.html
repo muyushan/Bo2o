@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      class="pixel-ratio-2 retina">
+<head th:replace="common::pagehead">
+    <title>文章展示</title>
+</head>
+<link rel="stylesheet" th:href="@{/mdeditor/css/editormd.css}" />
+<script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script th:src="@{/mdeditor/editormd.min.js}"></script>
+<script th:src="@{/mdeditor/lib/marked.min.js}"></script>
+<script th:src="@{/mdeditor/lib/prettify.min.js}"></script>
+<script th:src="@{/mdeditor/lib/raphael.min.js}"></script>
+<script th:src="@{/mdeditor/lib/underscore.min.js}"></script>
+<script th:src="@{/mdeditor/lib/sequence-diagram.min.js}"></script>
+<script th:src="@{/mdeditor/lib/flowchart.min.js}"></script>
+<script th:src="@{/mdeditor/lib/jquery.flowchart.min.js}"></script>
+
+<body class="layui-layout-body" style="overflow: scroll;">
+
+<div th:replace="common.html::header"></div>
+<div class="layui-fluid">
+    <form class="layui-form" th:action="@{article/save}">
+    <div class="layui-row layui-col-space10">
+    <div class="layui-row">
+        <div class="layui-col-md12 layui-btn-fluid">
+
+            <div style="display: none;" id="mdc">
+                ###Hello world!
+                ###关于 Editor.md
+
+                ** Editor.md ** 是一款开源的、可嵌入的 Markdown 在线编辑器（组件），基于 CodeMirror、jQuery 和 Marked 构建。
+
+                ```
+                dfdfdfdddf
+                dfdfdfd
+                ```
+            </div>
+            <div id="editormd-view" style="width: 98%;margin: 0 auto;">
+<!--    <textarea style="display:none;">-->
+
+<!--    </textarea>-->
+
+            </div>
+
+            <script type="text/javascript" th:inline="javascript">
+                var editormdView;
+                $(function() {
+                    var articleContent = [[${article.article_content}]];
+                    editormdView = editormd.markdownToHTML("editormd-view", {
+                        markdown        : articleContent,
+                        //htmlDecode      : true,       // 开启 HTML 标签解析，为了安全性，默认不开启
+                        htmlDecode      : "style,script,iframe",  // you can filter tags decode
+                        //toc             : false,
+                        tocm            : true,    // Using [TOCM]
+                        //tocContainer    : "#custom-toc-container", // 自定义 ToC 容器层
+                        //gfm             : false,
+                        //tocDropdown     : true,
+                        // markdownSourceCode : true, // 是否保留 Markdown 源码，即是否删除保存源码的 Textarea 标签
+                        emoji           : true,
+                        taskList        : true,
+                        tex             : true,  // 默认不解析
+                        flowChart       : true,  // 默认不解析
+                        sequenceDiagram : true,  // 默认不解析
+                        width  : "100%",
+                        height : 500
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</div>
+    </form>
+<div class="layui-fluid" th:replace="common::footer">
+</div>
+</div>
+</body>
+
+</html>

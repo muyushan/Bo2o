@@ -30,4 +30,8 @@ public class FirstController {
     articleService.test();
     return "/index";
     }
+    @RequestMapping("/redirectindex")
+    public String redirectIndex(){
+        return "redirect:/index";
+    }
 }

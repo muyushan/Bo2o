@@ -7,111 +7,7 @@
 <div th:replace="common.html::header"></div>
 <div class="layui-fluid">
     <div class="layui-row">
-        <div class="layui-col-md9 main-content">
-            <div class="layui-card">
-                <div class="layui-card-header">卡片面板</div>
-                <div class="layui-card-body">
-                    卡片式面板面板通常用于非白色背景色的主体内<br>
-                    从而映衬出边框投影
-                </div>
-                <div class="layui-card-fotter">
-                    <i class="layui-icon layui-icon-time">2020-04-19</i>
-                    <i class="layui-icon layui-icon-praise">33</i>
-                    <i class="layui-icon layui-icon-reply-fill">33</i>
-                    <i class="layui-icon layui-icon-read">55</i>
-                </div>
-            </div>
-            <div class="layui-card">
-                <div class="layui-card-header">卡片面板</div>
-                <div class="layui-card-body">
-                    卡片式面板面板通常用于非白色背景色的主体内<br>
-                    从而映衬出边框投影
-                </div>
-                <div class="layui-card-fotter">
-                    <i class="layui-icon layui-icon-time">2020-04-19</i>
-                    <i class="layui-icon layui-icon-praise">33</i>
-                    <i class="layui-icon layui-icon-reply-fill">33</i>
-                    <i class="layui-icon layui-icon-read">55</i>
-                </div>
-            </div>
-            <div class="layui-card">
-                <div class="layui-card-header">卡片面板</div>
-                <div class="layui-card-body">
-                    卡片式面板面板通常用于非白色背景色的主体内<br>
-                    从而映衬出边框投影
-                </div>
-                <div class="layui-card-fotter">
-                    <i class="layui-icon layui-icon-time">2020-04-19</i>
-                    <i class="layui-icon layui-icon-praise">33</i>
-                    <i class="layui-icon layui-icon-reply-fill">33</i>
-                    <i class="layui-icon layui-icon-read">55</i>
-                </div>
-            </div>
-            <div class="layui-card">
-                <div class="layui-card-header">卡片面板</div>
-                <div class="layui-card-body">
-                    卡片式面板面板通常用于非白色背景色的主体内<br>
-                    从而映衬出边框投影
-                </div>
-                <div class="layui-card-fotter">
-                    <i class="layui-icon layui-icon-time">2020-04-19</i>
-                    <i class="layui-icon layui-icon-praise">33</i>
-                    <i class="layui-icon layui-icon-reply-fill">33</i>
-                    <i class="layui-icon layui-icon-read">55</i>
-                </div>
-            </div>
-            <div class="layui-card">
-                <div class="layui-card-header">卡片面板</div>
-                <div class="layui-card-body">
-                    卡片式面板面板通常用于非白色背景色的主体内<br>
-                    从而映衬出边框投影
-                </div>
-                <div class="layui-card-fotter">
-                    <i class="layui-icon layui-icon-time">2020-04-19</i>
-                    <i class="layui-icon layui-icon-praise">33</i>
-                    <i class="layui-icon layui-icon-reply-fill">33</i>
-                    <i class="layui-icon layui-icon-read">55</i>
-                </div>
-            </div>
-            <div class="layui-card">
-                <div class="layui-card-header">卡片面板</div>
-                <div class="layui-card-body">
-                    卡片式面板面板通常用于非白色背景色的主体内<br>
-                    从而映衬出边框投影
-                </div>
-                <div class="layui-card-fotter">
-                    <i class="layui-icon layui-icon-time">2020-04-19</i>
-                    <i class="layui-icon layui-icon-praise">33</i>
-                    <i class="layui-icon layui-icon-reply-fill">33</i>
-                    <i class="layui-icon layui-icon-read">55</i>
-                </div>
-            </div>
-            <div class="layui-card">
-                <div class="layui-card-header">卡片面板</div>
-                <div class="layui-card-body">
-                    卡片式面板面板通常用于非白色背景色的主体内<br>
-                    从而映衬出边框投影
-                </div>
-                <div class="layui-card-fotter">
-                    <i class="layui-icon layui-icon-time">2020-04-19</i>
-                    <i class="layui-icon layui-icon-praise">33</i>
-                    <i class="layui-icon layui-icon-reply-fill">33</i>
-                    <i class="layui-icon layui-icon-read">55</i>
-                </div>
-            </div>
-            <div class="layui-card">
-                <div class="layui-card-header">卡片面板</div>
-                <div class="layui-card-body">
-                    卡片式面板面板通常用于非白色背景色的主体内<br>
-                    从而映衬出边框投影
-                </div>
-                <div class="layui-card-fotter">
-                    <i class="layui-icon layui-icon-time">2020-04-19</i>
-                    <i class="layui-icon layui-icon-praise">33</i>
-                    <i class="layui-icon layui-icon-reply-fill">33</i>
-                    <i class="layui-icon layui-icon-read">55</i>
-                </div>
-            </div>
+        <div id="article_container" class="layui-col-md9 main-content">
         </div>
         <div class="layui-col-md3 right-slider">
             你的内容 3/12
@@ -123,7 +19,44 @@
 </div>
 <ul class="layui-fixbar"><li class="layui-icon layui-fixbar-top" lay-type="top" style="display: list-item;"></li></ul>
 <script>
-    // layer.msg('Hello World');
+    debugger;
+    layui.use('flow', function(){
+        var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+        var flow = layui.flow;
+        var pageSize=10;
+        flow.load({
+            elem: '#article_container', //指定列表容器
+            end:"----------你已经触及了我的底线---------",
+            done:function(page, next){ //到达临界点（默认滚动触发），触发下一页
+                var lis = [];
+                $.ajax(
+                    {
+                        url:basePath+'article/list?pageNum='+page+"&pageSize="+pageSize,
+                        data:{},
+                        success:function(res){
+                            pageSize=3;
+                            layui.each(res.records, function(index, item){
+                                lis.push("<div class=\"layui-card\" data-articleid='"+item.article_id+"'>\n" +
+                                    "                <div class=\"layui-card-header\">"+item.article_name+"</div>\n" +
+                                    "                <div class=\"layui-card-body\">\n"+item.article_content+"</div>\n" +
+                                    "                <div class=\"layui-card-fotter\">\n" +
+                                    "                    <i class=\"layui-icon layui-icon-time\">"+new Date(item.article_time).Format('yyyy-MM-dd')+"</i>\n" +
+                                    "                    <i class=\"layui-icon layui-icon-praise\">33</i>\n" +
+                                    "                    <i class=\"layui-icon layui-icon-reply-fill\">33</i>\n" +
+                                    "                    <i class=\"layui-icon layui-icon-read\">55</i>\n" +
+                                    "                </div>\n" +
+                                    "            </div>");
+                            });
+                            next(lis.join(''), page < res.pages);
+                            $(".layui-card").on('click',function(e){
+                                window.open(basePath+"article/"+e.currentTarget.dataset.articleid);                 //在另外新建窗口中打开窗口
+                            });
+                        }
+                    });
+
+            }
+        });
+    });
 </script>
 </body>
 

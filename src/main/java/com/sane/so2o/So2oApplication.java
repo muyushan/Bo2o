@@ -25,7 +25,7 @@ public class So2oApplication {
 //    public void setDefaultTimeZone(){
 //        TimeZone.getDefault();
 //        System.out.println(new Date());
-//        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+//        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8")); 
 //    }
 }
 

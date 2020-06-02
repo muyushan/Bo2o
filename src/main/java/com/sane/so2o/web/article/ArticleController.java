@@ -9,18 +9,17 @@ import com.sane.so2o.entity.ud.RetValue;
 import com.sane.so2o.enums.RetCodeEnum;
 import com.sane.so2o.service.IArticleService;
 import com.sane.so2o.util.ContextUtil;
-import org.springframework.aop.config.AopConfigUtils;
+import com.sane.so2o.util.HttpServletRequstUtil;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Controller
@@ -35,15 +34,16 @@ public class ArticleController {
     }
     @ResponseBody
     @RequestMapping(value = "save",method = RequestMethod.POST)
-    public RetValue<String> saveArticle(Article article){
+    public RetValue<String> saveArticle(Article article, HttpServletRequest request){
         article.setArticle_time(new Date());
-        article.setArticle_ip(ContextUtil.getUserName());
-        User user=ContextUtil.getDetail();
+        article.setArticle_ip(HttpServletRequstUtil.getRealIp(request));
+        User user=ContextUtil.getUserDetail();
         article.setUser_id(user.getUser_id());
         boolean result=articleService.saveOrUpdate(article);
         RetValue<String> retValue=new RetValue<>();
         retValue.setCode(RetCodeEnum.SUCCESS.getCode());
         retValue.setMessage(RetCodeEnum.SUCCESS.getMessage());
+        retValue.setData(HttpServletRequstUtil.getBaseUrl(request)+"/article/a_"+article.getArticle_id());
         return  retValue;
     }
 
@@ -64,8 +64,6 @@ public class ArticleController {
         modelAndView.setViewName("article/showarticle");
        Article article= articleService.getById(articleId);
        modelAndView.addObject("article",article);
-
-//        Assert.notNull(article,"文章不存在了");
         return modelAndView;
     }
 }

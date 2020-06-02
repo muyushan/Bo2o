@@ -16,7 +16,7 @@ public class ContextUtil {
         }
         return "";
     }
-    public static User getDetail(){
+    public static User getUserDetail(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Assert.notNull(principal,"当前登录信息为空，请重新登录");
         if(principal instanceof SecurityUser){

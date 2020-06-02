@@ -4,7 +4,6 @@
 <head th:replace="common::pagehead">
 </head>
 <link rel="stylesheet" th:href="@{/mdeditor/css/editormd.css}" />
-<script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script th:src="@{/mdeditor/editormd.min.js}"></script>
 
 <body class="layui-layout-body" style="overflow: scroll;">
@@ -18,7 +17,7 @@
         </div>
         <div class="layui-col-md3">
             <select name="type_id" id="category" lay-verify="required" lay-reqText="请选择分类">
-                <option value="0">请选择一个分类</option>
+                <option value="">请选择文章分类</option>
                 <option value="1">Java</option>
                 <option value="2">Linux</option>
                 <option value="3">分布式</option>
@@ -45,39 +44,24 @@
                         path   : basePath+"mdeditor/lib/"
                     });
                     layui.use('form', function(){
-                        debugger;
-                        var form = layui.form;
-                        debugger;
-                        form.on('switch(article_type)', function(data){
-                            debugger;
-                            $("input[name='article_type']").val(data.checked ?1:0);
-                        });
+                        let form = layui.form;
                         form.on('submit(saveBtn)', function(data){
-                            // var title=$("#article_title").val();
-                            // var content=editor.getMarkdown();
-                            // var isPrivate=$("#isPrivate").val();
-                            // var category=$("#category").val();
-                            // alert(isPrivate);
-
-                            // if(category==null||category==""){
-                            //     layer.msg("请选择一个文章所属类别");
-                            //     return;
-                            // }
+                            data.field.article_type=data.field.article_type=="on"?1:0;
                             $.post(basePath+"article/save",data.field,function(retValue){
                                 if(retValue.code=="200"){
-                                    layer.msg('保存完成');
+                                    layer.open({
+                                        title: '保存完成',
+                                        content: "保存完成,<a href='"+retValue.data+"'>点击查看</a>",
+                                        area: ['80px', '150px']
+                                    });
+                                }else{
+                                    layer.alert(retValue.message,{icon: 5});
                                 }
                             })
                             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
                         });
 
                     });
-
-
-                    // $("#saveBtn").click(function(){
-                    //
-                    // });
-
                 });
             </script>
         </div>

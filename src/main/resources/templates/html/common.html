@@ -9,6 +9,8 @@
     <script th:src="@{/layui/layui.js}"></script>
     <script th:src="@{/js/commonutil.js}">
     </script>
+    <script th:src="@{/js/jquery_1.11.3_jquery.js}"></script>
+
     <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
         basePath = /*[[@{/}]]*/ '';
@@ -16,13 +18,13 @@
     </script>
     <script>
         //注意：导航 依赖 element 模块，否则无法进行功能性操作
-        var layer;
-        var $;
+        let layer;
+        let element;
         layui.use(['element','layer','form'], function(){
-            var element = layui.element;
-            element.init();
             layer= layui.layer;
-            $= layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+          element=layui.element;
+          element.init();
+
             $.ajaxSetup({
                 beforeSend:function(){
                     showloading();

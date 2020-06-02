@@ -2,6 +2,7 @@ package com.sane.so2o.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sane.so2o.entity.User;
+import com.sane.so2o.entity.ud.SecurityUser;
 import com.sane.so2o.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,18 +29,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
         QueryWrapper<User> queryWrappper=new QueryWrapper<User>();
         queryWrappper.eq("user_name",userName);
         User user = userService.getOne(queryWrappper);
-        UserDetails userDetails = null;
+        SecurityUser securityUser = null;
         if (user!=null) {
-            userDetails=org.springframework.security.core.userdetails.User.builder().password(user.getUser_pwd()).username(userName).roles("USER","ADMIN").build();
+             securityUser=new SecurityUser(user);
         }else{
             throw  new UsernameNotFoundException(userName);
         }
-        return userDetails;
+        return securityUser;
     }
 
-//    @Bean
-//    PasswordEncoder passwordEncoder(){
-//        PasswordEncoder passwordEncoder =new BCryptPasswordEncoder(16);
-//        return passwordEncoder;
-//    }
 }

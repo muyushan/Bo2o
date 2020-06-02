@@ -3,12 +3,16 @@ package com.sane.so2o.web.article;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sane.so2o.entity.Article;
+import com.sane.so2o.entity.User;
 import com.sane.so2o.entity.ud.Pager;
 import com.sane.so2o.entity.ud.RetValue;
 import com.sane.so2o.enums.RetCodeEnum;
 import com.sane.so2o.service.IArticleService;
 import com.sane.so2o.util.ContextUtil;
+import org.springframework.aop.config.AopConfigUtils;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +30,7 @@ public class ArticleController {
     private IArticleService articleService;
     @RequestMapping(value = "new",method = RequestMethod.GET)
     public String newArticle(){
+        AopContext.currentProxy();
         return "article/createnewarticle";
     }
     @ResponseBody
@@ -33,6 +38,8 @@ public class ArticleController {
     public RetValue<String> saveArticle(Article article){
         article.setArticle_time(new Date());
         article.setArticle_ip(ContextUtil.getUserName());
+        User user=ContextUtil.getDetail();
+        article.setUser_id(user.getUser_id());
         boolean result=articleService.saveOrUpdate(article);
         RetValue<String> retValue=new RetValue<>();
         retValue.setCode(RetCodeEnum.SUCCESS.getCode());
@@ -47,15 +54,17 @@ public class ArticleController {
         page.setCurrent(pager.getPageNum());
         page.setSize(pager.getPageSize());
         QueryWrapper<Article> queryWrapper=new QueryWrapper<>();
+        queryWrapper.orderByDesc("article_time","article_click");
         Page<Article> articlePage=articleService.page(page,queryWrapper);
         return  articlePage;
     }
-    @RequestMapping("/{articleId}")
+    @RequestMapping("/a_{articleId}")
     public ModelAndView queryArticleById(@PathVariable Integer articleId){
         ModelAndView modelAndView=new ModelAndView();
         modelAndView.setViewName("article/showarticle");
        Article article= articleService.getById(articleId);
        modelAndView.addObject("article",article);
+
 //        Assert.notNull(article,"文章不存在了");
         return modelAndView;
     }

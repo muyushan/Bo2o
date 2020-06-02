@@ -2,9 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org"
       class="pixel-ratio-2 retina">
 <head th:replace="common::pagehead">
-
-
-
 </head>
 <link rel="stylesheet" th:href="@{/mdeditor/css/editormd.css}" />
 <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
@@ -15,33 +12,30 @@
 <div th:replace="common.html::header"></div>
 <div class="layui-fluid">
     <form class="layui-form" th:action="@{article/save}">
-    <div class="layui-row layui-col-space10">
+    <div class="layui-row layui-col-space10" style="padding-top:2px;">
         <div class="layui-col-md5">
-            <input th:id="article_title" type="text" name="article_title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+            <input th:id="article_title" type="text" name="article_name" lay-verify="required" lay-reqText="请填写标题" placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
         <div class="layui-col-md3">
-            <select name="city" lay-verify="">
-                <option value="">请选择一个分类</option>
-                <option value="010">Java</option>
-                <option value="021">Linux</option>
-                <option value="0571">分布式</option>
-                <option value="0572">并发</option>
-                <option value="0573">杂文</option>
+            <select name="type_id" id="category" lay-verify="required" lay-reqText="请选择分类">
+                <option value="0">请选择一个分类</option>
+                <option value="1">Java</option>
+                <option value="2">Linux</option>
+                <option value="3">分布式</option>
+                <option value="4">并发</option>
+                <option value="5">杂文</option>
             </select>
         </div>
         <div class="layui-col-md1">
-            <input type="checkbox" name="zzz" lay-skin="switch" checked lay-text="公开|私有">
+            <input type="checkbox"  lay-filter="article_type" name="article_type" lay-skin="switch" checked lay-text="公开|私有">
         </div>
         <div class="layui-col-md1">
-            <button type="button" style="display: inline;" th:id="saveBtn" class="layui-btn  layui-btn-normal layui-btn-radius">保存</button>
+            <button type="button" lay-submit style="display: inline;" lay-filter="saveBtn" th:id="saveBtn" class="layui-btn  layui-btn-normal layui-btn-radius">保存</button>
         </div>
     <div class="layui-row">
         <div class="layui-col-md12 layui-btn-fluid">
             <div id="editor">
-    <textarea style="display:none;">### 关于 Editor.md
-
-**Editor.md** 是一款开源的、可嵌入的 Markdown 在线编辑器（组件），基于 CodeMirror、jQuery 和 Marked 构建。
-    </textarea>
+    <textarea style="display:none;" th:name="article_content" lay-verify="required" lay-reqText="请填写文章内容"></textarea>
             </div>
             <script type="text/javascript" th:inline="javascript">
                 $(function() {
@@ -50,15 +44,39 @@
                         height : 500,
                         path   : basePath+"mdeditor/lib/"
                     });
-                    $("#saveBtn").click(function(){
-                        var title=$("#article_title").val();
-                        var content=editor.getMarkdown();
-                        $.post(basePath+"article/save",{article_name:title,article_content:content},function(data){
-                            if(data.code=="200"){
-                                layer.msg('保存完成');
-                            }
-                        })
+                    layui.use('form', function(){
+                        debugger;
+                        var form = layui.form;
+                        debugger;
+                        form.on('switch(article_type)', function(data){
+                            debugger;
+                            $("input[name='article_type']").val(data.checked ?1:0);
+                        });
+                        form.on('submit(saveBtn)', function(data){
+                            // var title=$("#article_title").val();
+                            // var content=editor.getMarkdown();
+                            // var isPrivate=$("#isPrivate").val();
+                            // var category=$("#category").val();
+                            // alert(isPrivate);
+
+                            // if(category==null||category==""){
+                            //     layer.msg("请选择一个文章所属类别");
+                            //     return;
+                            // }
+                            $.post(basePath+"article/save",data.field,function(retValue){
+                                if(retValue.code=="200"){
+                                    layer.msg('保存完成');
+                                }
+                            })
+                            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+                        });
+
                     });
+
+
+                    // $("#saveBtn").click(function(){
+                    //
+                    // });
 
                 });
             </script>

@@ -41,7 +41,6 @@ import java.util.concurrent.TimeUnit;
  * @author 母玉山
  * @since 2020-05-16
  */
-//@Configuration
 @Slf4j
 @Service
 public class UserServiceImpl extends ServiceImpl<UserDao, User> implements IUserService {

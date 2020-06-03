@@ -25,7 +25,6 @@ public class FirstController {
     }
     @RequestMapping("/index")
     public String index(){
-    articleService.test();
     return "/index";
     }
     @RequestMapping("/redirectindex")

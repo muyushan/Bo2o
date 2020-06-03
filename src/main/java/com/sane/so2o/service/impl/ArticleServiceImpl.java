@@ -1,5 +1,7 @@
 package com.sane.so2o.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.sane.so2o.entity.Article;
 import com.sane.so2o.dao.ArticleDao;
 import com.sane.so2o.service.IArticleService;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Wrapper;
 import java.util.Date;
 
 /**
@@ -23,15 +26,12 @@ import java.util.Date;
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> implements IArticleService {
 
-    @Autowired
-    private ArticleDao articleDao;
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void test() {
-        Article article=articleDao.querytById(1);
-        article.setArticle_content("dddgdfdfd666");
-        article.setArticle_time(new Date());
-        articleDao.updateById(article);
-//        log.info(String.valueOf(3/0));
+    public void updateClick(int articleId) {
+        LambdaUpdateWrapper<Article> articleLambdaUpdateWrapper= Wrappers.lambdaUpdate(new Article());
+        articleLambdaUpdateWrapper.eq(Article::getArticle_id,articleId);
+        articleLambdaUpdateWrapper.setSql("article_click=IFNULL(article_click,0)+1");
+        update(articleLambdaUpdateWrapper);
     }
 }

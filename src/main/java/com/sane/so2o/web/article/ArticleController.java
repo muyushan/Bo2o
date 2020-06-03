@@ -13,6 +13,7 @@ import com.sane.so2o.util.HttpServletRequstUtil;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,7 +63,9 @@ public class ArticleController {
     public ModelAndView queryArticleById(@PathVariable Integer articleId){
         ModelAndView modelAndView=new ModelAndView();
         modelAndView.setViewName("article/showarticle");
-       Article article= articleService.getById(articleId);
+        Article article= articleService.getById(articleId);
+        Assert.notNull(article,"文章不存在了!");
+        articleService.updateClick(articleId);
        modelAndView.addObject("article",article);
         return modelAndView;
     }

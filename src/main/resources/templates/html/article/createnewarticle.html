@@ -34,11 +34,12 @@
     <div class="layui-row">
         <div class="layui-col-md12 layui-btn-fluid">
             <div id="editor">
-    <textarea style="display:none;" th:name="article_content" lay-verify="required" lay-reqText="请填写文章内容"></textarea>
+            <textarea style="display:none;" th:name="article_content" lay-verify="required" lay-reqText="请填写文章内容"></textarea>
             </div>
             <script type="text/javascript" th:inline="javascript">
                 $(function() {
                     var editor = editormd("editor", {
+                        placeholder:"开始创作吧",
                         width  : "100%",
                         height : 500,
                         path   : basePath+"mdeditor/lib/"

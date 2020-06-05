@@ -1,7 +1,12 @@
 package com.sane.so2o.dao;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sane.so2o.entity.Article;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sane.so2o.entity.ud.ArticleUD;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +17,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2020-05-13
  */
 public interface ArticleDao extends BaseMapper<Article> {
-    Article querytById(Integer id);
+    ArticleUD querytById(Integer id);
+    List<ArticleUD> queryByCondiction(@Param("article") Article article, Page page);
 }

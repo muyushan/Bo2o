@@ -19,57 +19,67 @@
 
 <div th:replace="common.html::header"></div>
 <div class="layui-fluid">
-    <form class="layui-form" th:action="@{article/save}">
     <div class="layui-row layui-col-space10">
-    <div class="layui-row">
         <div class="layui-col-md12 layui-btn-fluid">
-
-            <div style="display: none;" id="mdc">
-                ###Hello world!
-                ###关于 Editor.md
-
-                ** Editor.md ** 是一款开源的、可嵌入的 Markdown 在线编辑器（组件），基于 CodeMirror、jQuery 和 Marked 构建。
-
-                ```
-                dfdfdfdddf
-                dfdfdfd
-                ```
+            <div style="text-align: center;font-weight: bold;font-size: 36px;padding-top:10px;" id="articleTitle">
             </div>
-            <div id="editormd-view" style="width: 98%;margin: 0 auto;">
-<!--    <textarea style="display:none;">-->
-
-<!--    </textarea>-->
-
+            <blockquote class="layui-elem-quote layui-quote-nm">
+                <i class="layui-icon layui-icon-username" id="userName"></i>
+               <i class="layui-icon layui-icon-time" id="postTime"></i>
+               <i class="layui-icon layui-icon-read" id="clickCount"></i>
+            </blockquote>
+            <div id="editormd-view" style="width: 98%;margin: 0 auto; overflow: scroll;">
             </div>
-
-            <script type="text/javascript" th:inline="javascript">
-                var editormdView;
-                $(function() {
-                    var articleContent = [[${article.article_content}]];
-                    editormdView = editormd.markdownToHTML("editormd-view", {
-                        markdown        : articleContent,
-                        //htmlDecode      : true,       // 开启 HTML 标签解析，为了安全性，默认不开启
-                        htmlDecode      : "style,script,iframe",  // you can filter tags decode
-                        //toc             : false,
-                        tocm            : true,    // Using [TOCM]
-                        //tocContainer    : "#custom-toc-container", // 自定义 ToC 容器层
-                        //gfm             : false,
-                        //tocDropdown     : true,
-                        // markdownSourceCode : true, // 是否保留 Markdown 源码，即是否删除保存源码的 Textarea 标签
-                        emoji           : true,
-                        taskList        : true,
-                        tex             : true,  // 默认不解析
-                        flowChart       : true,  // 默认不解析
-                        sequenceDiagram : true,  // 默认不解析
-                        width  : "100%",
-                        height : 500
-                    });
-                });
-            </script>
         </div>
-    </div>
 </div>
-    </form>
+    <div class="layui-row layui-col-space10">
+        <form class="layui-form" th:action="@{article/commont}">
+        <div id="commentEditor">
+            <textarea style="display:none;" th:name="article_comment"></textarea>
+        </div>
+        </form>
+    </div>
+    <script type="text/javascript" th:inline="javascript">
+        var editormdView;
+        let commentEditor=null;
+        $(function() {
+            let articleContent = [[${article.article_content}]];
+            let articleTitle = [[${article.article_name}]];
+            $("#articleTitle").text(articleTitle);
+            $("#userName").text([[${article.user_name}]]);
+            $("#postTime").text(new Date([[${article.article_time}]]).Format('yyyy-MM-dd hh:mm:ss'));
+            $("#clickCount").text([[${article.article_click}]]==null?"0":[[${article.article_click}]]);
+            editormdView = editormd.markdownToHTML("editormd-view", {
+                markdown        : articleContent,
+                //htmlDecode      : true,       // 开启 HTML 标签解析，为了安全性，默认不开启
+                htmlDecode      : "style,script,iframe",  // you can filter tags decode
+                //toc             : false,
+                tocm            : true,    // Using [TOCM]
+                //tocContainer    : "#custom-toc-container", // 自定义 ToC 容器层
+                //gfm             : false,
+                //tocDropdown     : true,
+                // markdownSourceCode : true, // 是否保留 Markdown 源码，即是否删除保存源码的 Textarea 标签
+                emoji           : true,
+                taskList        : true,
+                tex             : true,  // 默认不解析
+                flowChart       : true,  // 默认不解析
+                sequenceDiagram : true,  // 默认不解析
+                width  : "100%",
+                height : "98%"
+            });
+            //评论
+            commentEditor = editormd("commentEditor", {
+                placeholder:"留下您的评论吧",
+                watch:0,
+                width  : "100%",
+                height : 200,
+                path   : basePath+"mdeditor/lib/",
+            });
+            commentEditor.hide();
+        });
+    </script>
+
+</div>
 <div class="layui-fluid" th:replace="common::footer">
 </div>
 </div>

@@ -10,14 +10,14 @@
         <div id="article_container" class="layui-col-md9 main-content">
         </div>
         <div class="layui-col-md3 right-slider">
-            你的内容 3/12
+            &nbsp;
         </div>
     </div>
 </div>
 <div class="layui-fluid" th:replace="common::footer">
 
 </div>
-<ul class="layui-fixbar"><li class="layui-icon layui-fixbar-top" lay-type="top" style="display: list-item;"></li></ul>
+
 <script>
     debugger;
     layui.use('flow', function(){
@@ -26,7 +26,8 @@
         var pageSize=10;
         flow.load({
             elem: '#article_container', //指定列表容器
-            end:"----------你已经触及了我的底线---------",
+            mb:10,
+            end:"----底线----",
             done:function(page, next){ //到达临界点（默认滚动触发），触发下一页
                 var lis = [];
                 $.ajax(
@@ -40,14 +41,16 @@
                                     "                <div class=\"layui-card-header\">"+item.article_name+"</div>\n" +
                                     "                <div class=\"layui-card-body\">\n"+item.article_content+"</div>\n" +
                                     "                <div class=\"layui-card-fotter\">\n" +
-                                    "                    <i class=\"layui-icon layui-icon-time\">"+new Date(item.article_time).Format('yyyy-MM-dd')+"</i>\n" +
-                                    "                    <i class=\"layui-icon layui-icon-praise\">33</i>\n" +
-                                    "                    <i class=\"layui-icon layui-icon-reply-fill\">33</i>\n" +
-                                    "                    <i class=\"layui-icon layui-icon-read\">55</i>\n" +
+                                    "                    <i class=\"layui-icon layui-icon-username\">"+item.user_name+"</i>\n" +
+                                    "                    <i class=\"layui-icon layui-icon-time\">"+new Date(item.article_time).Format('yyyy-MM-dd hh:mm:ss')+"</i>\n" +
+                                    "                    <i class=\"layui-icon layui-icon-praise\"></i>\n" +
+                                    "                    <i class=\"layui-icon layui-icon-reply-fill\"></i>\n" +
+                                    "                    <i class=\"layui-icon layui-icon-read\">"+(item.article_click==null?"0":item.article_click)+"</i>\n" +
                                     "                </div>\n" +
                                     "            </div>");
                             });
                             next(lis.join(''), page < res.pages);
+                            $('.layui-card').off('click');//解决click事件的重复绑定问题
                             $(".layui-card").on('click',function(e){
                                 window.open(basePath+"article/a_"+e.currentTarget.dataset.articleid);                 //在另外新建窗口中打开窗口
                             });

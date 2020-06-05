@@ -20,11 +20,29 @@
         //注意：导航 依赖 element 模块，否则无法进行功能性操作
         let layer;
         let element;
-        layui.use(['element','layer','form'], function(){
+        layui.use(['element','layer','form','util'], function(){
             layer= layui.layer;
           element=layui.element;
           element.init();
+            let util = layui.util;
+            //固定块
 
+            let bar1=$("#commentEditor").length>0?'<i class="layui-icon layui-icon-dialogue" style="font-size:33px!important;color:white;"></i>':false;
+            util.fixbar({
+                bar1: bar1//
+                ,bar2: false
+                ,css: {right: 50, bottom: 50}
+                ,bgcolor: '#5FB878'
+                ,click: function(type){
+                    if(type === 'bar1'){
+                        commentEditor.show();
+                        commentEditor.unwatch();
+                        scrollToElement("commentEditor");
+                    } else if(type === 'bar2') {
+                        layer.msg('两个 bar 都可以设定是否开启')
+                    }
+                }
+            });
             $.ajaxSetup({
                 beforeSend:function(){
                     showloading();

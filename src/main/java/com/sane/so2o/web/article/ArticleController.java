@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sane.so2o.entity.Article;
 import com.sane.so2o.entity.User;
+import com.sane.so2o.entity.ud.ArticleUD;
 import com.sane.so2o.entity.ud.Pager;
 import com.sane.so2o.entity.ud.RetValue;
 import com.sane.so2o.enums.RetCodeEnum;
@@ -50,20 +51,20 @@ public class ArticleController {
 
     @ResponseBody
     @RequestMapping(value = "list")
-    public Page<Article> queryArticles(Article article, Pager pager){
+    public Page<ArticleUD> queryArticles(Article article, Pager pager){
         Page<Article> page=new Page<>();
         page.setCurrent(pager.getPageNum());
         page.setSize(pager.getPageSize());
         QueryWrapper<Article> queryWrapper=new QueryWrapper<>();
         queryWrapper.orderByDesc("article_time","article_click");
-        Page<Article> articlePage=articleService.page(page,queryWrapper);
+        Page<ArticleUD> articlePage=articleService.query(article,pager);
         return  articlePage;
     }
     @RequestMapping("/a_{articleId}")
     public ModelAndView queryArticleById(@PathVariable Integer articleId){
         ModelAndView modelAndView=new ModelAndView();
         modelAndView.setViewName("article/showarticle");
-        Article article= articleService.getById(articleId);
+        ArticleUD article= articleService.queryArticleById(articleId);
         Assert.notNull(article,"文章不存在了!");
         articleService.updateClick(articleId);
        modelAndView.addObject("article",article);

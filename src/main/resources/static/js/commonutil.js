@@ -74,3 +74,17 @@ function showloading(){
 function closeloading(){
 	layer.closeAll('loading');
 }
+
+/**
+ * 页面滚动至指定元素位置
+ * @param elementId
+ */
+function scrollToElement(elementId){
+	let tTop = jQuery("#"+elementId).offset().top;  //得到控件Top
+	let tWindowHeight = jQuery(window).height(); //浏览器可视窗口高度
+	let tElementHeight = jQuery("#"+elementId).height(); //控件高度
+	let tScrollTop = tTop-tWindowHeight*0.3-tElementHeight*0.5; //让控件中心位于可视窗口3分之1处
+	jQuery('html, body').animate({
+		scrollTop: tScrollTop
+	}, 1000);
+}

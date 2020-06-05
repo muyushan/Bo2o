@@ -27,3 +27,13 @@
 .layui-card-header{border-bottom: 1px solid #5fb87847!important; font-weight: bold;}
 .layui-card-fotter{padding-left: 5px;}
 .layui-icon{font-size:13px!important; margin-left:10px;cursor: pointer;}
+.layui-fixbar li {font-size: 44px!important;}
+/**
+解决layui 和edit.md 同时使用时导致有序列表和无序列表无法正常渲染的问题
+ */
+ol>li{
+    list-style: decimal !important;
+}
+ul>li{
+    list-style: disc !important;
+}

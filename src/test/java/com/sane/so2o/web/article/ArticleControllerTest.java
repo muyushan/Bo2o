@@ -3,6 +3,7 @@ package com.sane.so2o.web.article;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sane.so2o.BaseTest;
 import com.sane.so2o.entity.Article;
+import com.sane.so2o.entity.ud.ArticleUD;
 import com.sane.so2o.entity.ud.Pager;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class ArticleControllerTest extends BaseTest {
         Pager pager=new Pager();
         pager.setPageNum(1);
         pager.setPageSize(10);
-        Page<Article> articlePage=articleController.queryArticles(new Article(),pager);
+        Page<ArticleUD> articlePage=articleController.queryArticles(new Article(),pager);
         Assert.assertEquals(articlePage.getSize(),10);
     }
 }

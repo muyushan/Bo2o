@@ -22,8 +22,6 @@ import static org.junit.Assert.assertEquals;
 public class ArticleDaoTest extends BaseTest {
     @Autowired
     private ArticleDao articleDao;
-    @Autowired
-    private DataSource dataSource;
 
     @Test
     public void insertA() {

@@ -20,11 +20,23 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        article_id, article_name, article_time, article_ip, article_click, sort_article_id, user_id, type_id, article_type, article_content, article_up, article_support
+        article_id, article_name, article_time, article_ip, article_click, sort_article_id, a.user_id, type_id, article_type, article_content, article_up, article_support
     </sql>
 
 
-    <select id="querytById" resultType="com.sane.so2o.entity.Article">
-        select * from article where article_id=#{id}
+    <select id="querytById" resultType="com.sane.so2o.entity.ud.ArticleUD">
+        select <include refid="Base_Column_List"></include>,b.user_name from article a left join user b on a. user_id=b.user_id
+        where article_id=#{id}
+    </select>
+
+    <select id="queryByCondiction"  resultType="com.sane.so2o.entity.ud.ArticleUD">
+        select <include refid="Base_Column_List"></include>,b.user_name from article a left join user b on a. user_id=b.user_id
+       <where>
+           <if test="article.article_id!=null">
+           and a.article_id=#{article.article_id}
+           </if>
+       </where>
+
+        order by a.article_click desc,a.article_time desc
     </select>
 </mapper>

@@ -43,13 +43,65 @@
                     }
                 }
             });
+            /**
+             * ajax全局设置发起请求就显示加载遮罩，请求完成就关闭遮罩
+             */
             $.ajaxSetup({
                 beforeSend:function(){
                     showloading();
                 },
                 cache:false,
-                complete:function(){
+                complete:function(jqXHR, textStatus, errorThrown){
                     closeloading();
+                    //获取后台返回的参数
+                    var url = jqXHR.getResponseHeader("redirectUrl");
+                    var enable = jqXHR.getResponseHeader("enableRedirect");
+                    if((enable == "true") && (url != "")){
+                        var win = window;
+                        while(win != win.top){
+                            win = win.top;
+                        }
+                        layer.msg('该操作需要登录3秒后自动跳转登录页', {
+                            icon: 1,
+                            time: 3000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            win.location.href = url;
+                        });
+                    }
+                    // switch (jqXHR.status) {
+                    //     case (500):
+                    //         layer.alert('服务器系统内部错误', {
+                    //             icon : 2
+                    //         });
+                    //         break;
+                    //     case (302):
+                    //         console.log("cccc")
+                    //         layer.alert('重定向', {
+                    //             icon : 2
+                    //         });
+                    //         break;
+                    //     case (401):
+                    //         layer.alert('请先登录', {
+                    //             icon : 2
+                    //         });
+                    //         break;
+                    //     case (403):
+                    //         layer.alert('无权限执行此操作', {
+                    //             icon : 2
+                    //         });
+                    //         break;
+                    //     case (408):
+                    //         layer.alert('请求超时', {
+                    //             icon : 2
+                    //         });
+                    //         break;
+                    //     default:
+                    //         layer.alert('未知错误,请联系管理员', {
+                    //             icon : 2
+                    //         });
+                    // }
+                },
+                error : function() {
                 }
             });
         });

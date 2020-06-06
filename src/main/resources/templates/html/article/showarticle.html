@@ -33,10 +33,12 @@
         </div>
 </div>
     <div class="layui-row layui-col-space10">
-        <form class="layui-form" th:action="@{article/commont}">
+        <form class="layui-form">
+            <input type="hidden" value="" name="commitId" id="articleId">
         <div id="commentEditor">
-            <textarea style="display:none;" th:name="article_comment"></textarea>
+            <textarea lay-verify="required" lay-reqText="请选择分类" style="display:none;" th:name="commitContent"></textarea>
         </div>
+            <button type="button" lay-submit style="display: inline;" lay-filter="saveBtn" th:id="saveBtn" class="layui-btn  layui-btn-normal layui-btn-radius">评论</button>
         </form>
     </div>
     <script type="text/javascript" th:inline="javascript">
@@ -46,6 +48,7 @@
             let articleContent = [[${article.article_content}]];
             let articleTitle = [[${article.article_name}]];
             $("#articleTitle").text(articleTitle);
+            $("#articleId").val([[${article.article_id}]]);
             $("#userName").text([[${article.user_name}]]);
             $("#postTime").text(new Date([[${article.article_time}]]).Format('yyyy-MM-dd hh:mm:ss'));
             $("#clickCount").text([[${article.article_click}]]==null?"0":[[${article.article_click}]]);
@@ -70,12 +73,32 @@
             //评论
             commentEditor = editormd("commentEditor", {
                 placeholder:"留下您的评论吧",
-                watch:0,
+                watch:0,//关闭预览模式
                 width  : "100%",
                 height : 200,
                 path   : basePath+"mdeditor/lib/",
             });
             commentEditor.hide();
+        });
+        layui.use('form', function(){
+            let form = layui.form;
+            form.on('submit(saveBtn)', function(data){
+                $.ajax({
+                    url:basePath+"userComment/save",
+                    data:data.field,
+                    type:"POST",
+                    dataType:"application/json",
+                    success:function(retValue){
+                        if(retValue.code=="200"){
+                            layer.msg("保存完成");
+                        }else{
+                            debugger;
+                            layer.alert(retValue.message,{icon: 5});
+                        }
+                    }});
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+
         });
     </script>
 

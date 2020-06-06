@@ -77,4 +77,9 @@ public class HttpServletRequstUtil {
     public static  String getBaseUrl(HttpServletRequest request){
         return request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
     }
+    public static Boolean isAjaxRequest(HttpServletRequest request){
+        String ajaxHeader = request.getHeader("X-Requested-With");// ajax请求特有的请求头
+        return "XMLHttpRequest".equals(ajaxHeader);
+
+    }
 }

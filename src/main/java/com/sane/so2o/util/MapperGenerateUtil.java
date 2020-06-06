@@ -10,12 +10,12 @@ import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
+import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 
 public class MapperGenerateUtil {
     public static void main(String[] args){
         MapperGenerateUtil generateUtil=new MapperGenerateUtil();
-
         AutoGenerator autoGenerator=new AutoGenerator();
         autoGenerator.setTemplateEngine(new VelocityTemplateEngine());
         autoGenerator.setConfig(generateUtil.generageConfigBuilder());
@@ -36,6 +36,13 @@ public class MapperGenerateUtil {
         globalConfig.setActiveRecord(true);
         globalConfig.setBaseColumnList(true);
         globalConfig.setBaseResultMap(true);
+        // 自定义文件命名，注意 %s 会自动填充表实体属性！
+        globalConfig.setControllerName("%sController");
+        // 默认service接口名IXXXService 自定义指定之后就不会用I开头了
+        globalConfig.setServiceName("%sService");
+        globalConfig.setServiceImplName("%sServiceImpl");
+        globalConfig.setMapperName("%sMapper");
+        globalConfig.setXmlName("%sMapper");
         globalConfig.setMapperName("%sDao");
         globalConfig.setXmlName("%sDao");
         globalConfig.setIdType(IdType.AUTO);
@@ -51,7 +58,8 @@ public class MapperGenerateUtil {
         StrategyConfig strategyConfig=new StrategyConfig();
         strategyConfig.setCapitalMode(true);
         strategyConfig.setEntityLombokModel(true);
-        strategyConfig.setInclude("verifycodeprocess");//设置要生成的表明
+        strategyConfig.setNaming(NamingStrategy.underline_to_camel);//驼峰命名
+        strategyConfig.setInclude("user_comment");//设置要生成的表明
 
         DataSourceConfig dataSourceConfig=new DataSourceConfig();
         dataSourceConfig.setDbType(DbType.MYSQL);

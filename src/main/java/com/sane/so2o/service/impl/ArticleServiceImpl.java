@@ -48,6 +48,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
     @Cacheable(value = "article",key ="#root.args[0]")
     @Override
     public ArticleUD queryArticleById(Integer articleId) {
-       return this.baseMapper.querytById(articleId);
+        ArticleUD articleUD= this.baseMapper.querytById(articleId);
+        return articleUD;
     }
 }

@@ -49,7 +49,7 @@
             let articleTitle = [[${article.article_name}]];
             $("#articleTitle").text(articleTitle);
             $("#articleId").val([[${article.article_id}]]);
-            $("#userName").text([[${article.user_name}]]);
+            $("#userName").text([[${article.userName}]]);
             $("#postTime").text(new Date([[${article.article_time}]]).Format('yyyy-MM-dd hh:mm:ss'));
             $("#clickCount").text([[${article.article_click}]]==null?"0":[[${article.article_click}]]);
             editormdView = editormd.markdownToHTML("editormd-view", {

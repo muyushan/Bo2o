@@ -11,10 +11,9 @@ import com.sane.so2o.entity.ud.UserUD;
  * </p>
  *
  * @author 母玉山
- * @since 2020-05-21
+ * @since 2020-06-06
  */
-public interface IUserService extends IService<User> {
-
+public interface UserService extends IService<User> {
     public Boolean userNameExist(String userName);
     public RetValue sendEmailVerifyCode(String userName, String emailAddress);
     public RetValue registUserInfo(UserUD userUD);

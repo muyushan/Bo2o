@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 母玉山
- * @since 2020-05-21
+ * @since 2020-06-06
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -27,132 +27,132 @@ public class User extends Model<User> {
      * 用户ID
      */
       @TableId(value = "user_id", type = IdType.AUTO)
-    private Integer user_id;
+    private Integer userId;
 
     /**
      * 用户组ID
      */
-    private Integer group_id;
+    private Integer groupId;
 
     /**
      * 用户名
      */
-    private String user_name;
+    private String userName;
 
     /**
      * 用户密码
      */
-    private String user_pwd;
+    private String userPwd;
 
     /**
      * 用户手机号码
      */
-    private Integer user_phone;
+    private Integer userPhone;
 
     /**
      * 用户性别
      */
-    private String user_sex;
+    private String userSex;
 
     /**
      * 用户QQ号码
      */
-    private Integer user_qq;
+    private Integer userQq;
 
     /**
      * 用户EMAIL地址
      */
-    private String user_email;
+    private String userEmail;
 
     /**
      * 用户地址
      */
-    private String user_address;
+    private String userAddress;
 
     /**
      * 用户积分
      */
-    private Integer user_mark;
+    private Integer userMark;
 
     /**
      * 用户等级
      */
-    private Integer user_rank_id;
+    private Integer userRankId;
 
     /**
      * 用户上一次登录IP地址
      */
-    private String user_last_login_ip;
+    private String userLastLoginIp;
 
     /**
      * 用户生日
      */
-    private Integer user_birthday;
+    private Integer userBirthday;
 
     /**
      * 自我描述
      */
-    private String user_description;
+    private String userDescription;
 
     /**
      * 用户头像存储路径
      */
-    private String user_image_url;
+    private String userImageUrl;
 
     /**
      * 毕业学校
      */
-    private String user_school;
+    private String userSchool;
 
     /**
      * 用户注册时间
      */
-    private Integer user_register_time;
+    private Integer userRegisterTime;
 
     /**
      * 用户注册时IP地址
      */
-    private String user_register_ip;
+    private String userRegisterIp;
 
     /**
      * 用户上次更新博客时间
      */
-    private Integer user_last_update_time;
+    private Integer userLastUpdateTime;
 
     /**
      * 用户微博
      */
-    private String user_weibo;
+    private String userWeibo;
 
     /**
      * 用户血型
      */
-    private String user_blood_type;
+    private String userBloodType;
 
     /**
      * 用户语录
      */
-    private String user_says;
+    private String userSays;
 
     /**
      * 是否锁定，0为不锁定，1为锁定
      */
-    private Integer user_lock;
+    private Integer userLock;
 
     /**
      * 是否冻结，0为不冻结，1为冻结
      */
-    private Integer user_freeze;
+    private Integer userFreeze;
 
     /**
      * 拥有权限
      */
-    private String user_power;
+    private String userPower;
 
 
     @Override
     protected Serializable pkVal() {
-        return this.user_id;
+        return this.userId;
     }
 
 }

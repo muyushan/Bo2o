@@ -5,7 +5,7 @@ import com.sane.so2o.entity.User;
 import com.sane.so2o.entity.ud.RetValue;
 import com.sane.so2o.entity.ud.UserUD;
 import com.sane.so2o.enums.RetCodeEnum;
-import com.sane.so2o.service.IUserService;
+import com.sane.so2o.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserController {
 
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
 
     @ResponseBody

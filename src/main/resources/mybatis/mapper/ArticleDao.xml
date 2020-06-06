@@ -25,12 +25,12 @@
 
 
     <select id="querytById" resultType="com.sane.so2o.entity.ud.ArticleUD">
-        select <include refid="Base_Column_List"></include>,b.user_name from article a left join user b on a. user_id=b.user_id
+        select <include refid="Base_Column_List"></include>,b.user_name as userName from article a left join user b on a. user_id=b.user_id
         where article_id=#{id}
     </select>
 
     <select id="queryByCondiction"  resultType="com.sane.so2o.entity.ud.ArticleUD">
-        select <include refid="Base_Column_List"></include>,b.user_name from article a left join user b on a. user_id=b.user_id
+        select <include refid="Base_Column_List"></include>,b.user_name AS userName from article a left join user b on a. user_id=b.user_id
        <where>
            <if test="article.article_id!=null">
            and a.article_id=#{article.article_id}

@@ -40,7 +40,7 @@ public class ArticleController {
         article.setArticle_time(new Date());
         article.setArticle_ip(HttpServletRequstUtil.getRealIp(request));
         User user=ContextUtil.getUserDetail();
-        article.setUser_id(user.getUser_id());
+        article.setUser_id(user.getUserId());
         boolean result=articleService.saveOrUpdate(article);
         RetValue<String> retValue=new RetValue<>();
         retValue.setCode(RetCodeEnum.SUCCESS.getCode());

@@ -9,5 +9,5 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class ArticleUD extends Article {
-    private String user_name;
+    private String userName;
 }

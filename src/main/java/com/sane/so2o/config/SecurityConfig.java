@@ -1,6 +1,5 @@
 package com.sane.so2o.config;
 
-import com.sane.so2o.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/login").usernameParameter("username").passwordParameter("password")
                 .permitAll().successForwardUrl("/redirectindex").
                 and().logout().logoutSuccessUrl("/index")
                 .invalidateHttpSession(true).clearAuthentication(true)

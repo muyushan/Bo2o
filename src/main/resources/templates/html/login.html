@@ -75,8 +75,8 @@
         //     return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         // });
 
-        $("input[name='user_name']").blur(function(){
-            var userName=$("input[name='user_name']").val();
+        $("input[name='username']").blur(function(){
+            var userName=$("input[name='username']").val();
             if(userName==null||userName==''){
                 layer.msg('请填写用户名');
             }

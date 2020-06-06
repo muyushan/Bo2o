@@ -2,8 +2,8 @@ package com.sane.so2o.impl;
 
 import com.google.code.kaptcha.Producer;
 import com.sane.so2o.BaseTest;
-import com.sane.so2o.service.IUserService;
 import com.sane.so2o.service.MailSenderService;
+import com.sane.so2o.service.UserService;
 import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class MailSenderServiceTest extends BaseTest {
     @Autowired
     private Producer producer;
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
     @Test
     public void testSendTextEmail(){

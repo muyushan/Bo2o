@@ -5,11 +5,11 @@ import lombok.Data;
 
 @Data
 public class UserUD extends User {
-    private String user_pwd_verify;
-    private String email_verify_code;
+    private String userPwdVerify;
+    private String emailVerifyCode;
 
     public String getKey(){
-        return "user::"+getUser_email();
+        return "user::"+getUserEmail();
     }
 
 

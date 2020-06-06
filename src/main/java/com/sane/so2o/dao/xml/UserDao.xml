@@ -4,31 +4,31 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.sane.so2o.entity.User">
-        <id column="user_id" property="user_id" />
-        <result column="group_id" property="group_id" />
-        <result column="user_name" property="user_name" />
-        <result column="user_pwd" property="user_pwd" />
-        <result column="user_phone" property="user_phone" />
-        <result column="user_sex" property="user_sex" />
-        <result column="user_qq" property="user_qq" />
-        <result column="user_email" property="user_email" />
-        <result column="user_address" property="user_address" />
-        <result column="user_mark" property="user_mark" />
-        <result column="user_rank_id" property="user_rank_id" />
-        <result column="user_last_login_ip" property="user_last_login_ip" />
-        <result column="user_birthday" property="user_birthday" />
-        <result column="user_description" property="user_description" />
-        <result column="user_image_url" property="user_image_url" />
-        <result column="user_school" property="user_school" />
-        <result column="user_register_time" property="user_register_time" />
-        <result column="user_register_ip" property="user_register_ip" />
-        <result column="user_last_update_time" property="user_last_update_time" />
-        <result column="user_weibo" property="user_weibo" />
-        <result column="user_blood_type" property="user_blood_type" />
-        <result column="user_says" property="user_says" />
-        <result column="user_lock" property="user_lock" />
-        <result column="user_freeze" property="user_freeze" />
-        <result column="user_power" property="user_power" />
+        <id column="user_id" property="userId" />
+        <result column="group_id" property="groupId" />
+        <result column="user_name" property="userName" />
+        <result column="user_pwd" property="userPwd" />
+        <result column="user_phone" property="userPhone" />
+        <result column="user_sex" property="userSex" />
+        <result column="user_qq" property="userQq" />
+        <result column="user_email" property="userEmail" />
+        <result column="user_address" property="userAddress" />
+        <result column="user_mark" property="userMark" />
+        <result column="user_rank_id" property="userRankId" />
+        <result column="user_last_login_ip" property="userLastLoginIp" />
+        <result column="user_birthday" property="userBirthday" />
+        <result column="user_description" property="userDescription" />
+        <result column="user_image_url" property="userImageUrl" />
+        <result column="user_school" property="userSchool" />
+        <result column="user_register_time" property="userRegisterTime" />
+        <result column="user_register_ip" property="userRegisterIp" />
+        <result column="user_last_update_time" property="userLastUpdateTime" />
+        <result column="user_weibo" property="userWeibo" />
+        <result column="user_blood_type" property="userBloodType" />
+        <result column="user_says" property="userSays" />
+        <result column="user_lock" property="userLock" />
+        <result column="user_freeze" property="userFreeze" />
+        <result column="user_power" property="userPower" />
     </resultMap>
 
     <!-- 通用查询结果列 -->

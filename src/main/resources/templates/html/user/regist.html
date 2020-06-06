@@ -18,7 +18,7 @@
                 <div class="layui-form-item" pane style="border: none;">
                     <label class="layui-form-label">用户名</label>
                     <div class="layui-input-block">
-                        <input type="text" placeholder="字母，数字组合，长度不小于6位" name="user_name" required lay-verify="required" class="layui-input">
+                        <input type="text" placeholder="字母，数字组合，长度不小于6位" name="userName" required lay-verify="required" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item" pane style="border: none;">
@@ -87,7 +87,7 @@
         });
         $("button[lay-filter='sendVerifyCode']").click(function(){
             var userEmail=$("input[name='user_email']").val();
-            var userName=$("input[name='user_name']").val();
+            var userName=$("input[name='userName']").val();
             if(userEmail==null||userEmail==''){
                 layer.msg('请填写邮箱');
             }else{
@@ -110,8 +110,8 @@
                 });
             }
         });
-        $("input[name='user_name']").blur(function(){
-            var userName=$("input[name='user_name']").val();
+        $("input[name='userName']").blur(function(){
+            var userName=$("input[name='userName']").val();
             if(userName==null||userName==''){
                 layer.msg('请填写用户名');
             }else{
@@ -124,7 +124,7 @@
         $.get(url,function (data) {
             if(data.code!="200"){
                 layer.msg(data.message);
-                $("input[name='user_name']").select();
+                $("input[name='userName']").select();
             }
         });
     }

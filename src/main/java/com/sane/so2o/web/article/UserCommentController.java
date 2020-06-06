@@ -37,7 +37,7 @@ public class UserCommentController {
     @RequestMapping("save")
     public RetValue<String> saveComment(UserComment userComment, HttpServletRequest request){
         RetValue<String> retValue=new RetValue<>();
-        userComment.setCommitUserId(ContextUtil.getUserDetail().getUser_id());
+        userComment.setCommitUserId(ContextUtil.getUserDetail().getUserId());
         userComment.setCommitIp(HttpServletRequstUtil.getRealIp(request));
         userComment.setCommitTime(new Date());
         Article article=articleService.getById(userComment.getCommitId());

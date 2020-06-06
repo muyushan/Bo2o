@@ -30,7 +30,7 @@ public class MapperGenerateUtil {
         globalConfig.setAuthor("母玉山");
         String projectPath = System.getProperty("user.dir");
         globalConfig.setOutputDir(projectPath + "/src/main/java");
-        globalConfig.setFileOverride(false);//避免覆盖
+        globalConfig.setFileOverride(true);//避免覆盖
         globalConfig.setOpen(true);
         globalConfig.setEnableCache(false);
         globalConfig.setActiveRecord(true);
@@ -59,7 +59,7 @@ public class MapperGenerateUtil {
         strategyConfig.setCapitalMode(true);
         strategyConfig.setEntityLombokModel(true);
         strategyConfig.setNaming(NamingStrategy.underline_to_camel);//驼峰命名
-        strategyConfig.setInclude("user_comment");//设置要生成的表明
+        strategyConfig.setInclude("user");//设置要生成的表明
 
         DataSourceConfig dataSourceConfig=new DataSourceConfig();
         dataSourceConfig.setDbType(DbType.MYSQL);

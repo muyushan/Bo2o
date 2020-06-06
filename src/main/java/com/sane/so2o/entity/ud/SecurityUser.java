@@ -22,7 +22,7 @@ public class SecurityUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
-        String power=user.getUser_power();
+        String power=user.getUserPower();
         if(StringUtils.isNotEmpty(power)){
             List<String> powers= Arrays.asList(power.split(";"));
             powers.forEach(p->{
@@ -35,12 +35,12 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getUser_pwd();
+        return user.getUserPwd();
     }
 
     @Override
     public String getUsername() {
-        return user.getUser_name();
+        return user.getUserName();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return user.getUser_lock().intValue()==0;
+        return user.getUserLock().intValue()==0;
 
     }
 
@@ -61,7 +61,7 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.getUser_freeze().intValue()==0;
+        return user.getUserFreeze().intValue()==0;
     }
 
     public User getDetail(){

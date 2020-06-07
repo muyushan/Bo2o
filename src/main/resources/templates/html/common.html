@@ -37,6 +37,7 @@
                     if(type === 'bar1'){
                         commentEditor.show();
                         commentEditor.unwatch();
+                        $("#saveCommentBtn").css("display","inline");
                         scrollToElement("commentEditor");
                     } else if(type === 'bar2') {
                         layer.msg('两个 bar 都可以设定是否开启')

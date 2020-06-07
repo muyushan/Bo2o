@@ -39,7 +39,7 @@
         <div id="commentEditor">
             <textarea lay-verify="required" lay-reqText="请输入您的评论内容" style="display:none;" th:name="commitContent"></textarea>
         </div>
-            <button type="button" lay-submit style="display: inline;" lay-filter="saveBtn" th:id="saveBtn" class="layui-btn  layui-btn-normal layui-btn-radius">评论</button>
+            <button type="button" lay-submit style="display: none;" lay-filter="saveBtn" th:id="saveCommentBtn" class="layui-btn  layui-btn-normal layui-btn-radius">评论</button>
         </form>
     </div>
     <script type="text/javascript" th:inline="javascript">

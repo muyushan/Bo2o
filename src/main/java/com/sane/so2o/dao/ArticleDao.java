@@ -14,7 +14,7 @@ import java.util.List;
  * </p>
  *
  * @author 母玉山
- * @since 2020-05-13
+ * @since 2020-06-06
  */
 public interface ArticleDao extends BaseMapper<Article> {
     ArticleUD querytById(Integer id);

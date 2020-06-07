@@ -8,7 +8,7 @@ import com.sane.so2o.entity.ud.ArticleUD;
 import com.sane.so2o.entity.ud.Pager;
 import com.sane.so2o.entity.ud.RetValue;
 import com.sane.so2o.enums.RetCodeEnum;
-import com.sane.so2o.service.IArticleService;
+import com.sane.so2o.service.ArticleService;
 import com.sane.so2o.util.ContextUtil;
 import com.sane.so2o.util.HttpServletRequstUtil;
 import org.springframework.aop.framework.AopContext;
@@ -28,7 +28,7 @@ import java.util.Date;
 @RequestMapping("article")
 public class ArticleController {
     @Autowired
-    private IArticleService articleService;
+    private ArticleService articleService;
     @RequestMapping(value = "new",method = RequestMethod.GET)
     public String newArticle(){
         AopContext.currentProxy();
@@ -37,15 +37,15 @@ public class ArticleController {
     @ResponseBody
     @RequestMapping(value = "save",method = RequestMethod.POST)
     public RetValue<String> saveArticle(Article article, HttpServletRequest request){
-        article.setArticle_time(new Date());
-        article.setArticle_ip(HttpServletRequstUtil.getRealIp(request));
+        article.setArticleTime(new Date());
+        article.setArticleIp(HttpServletRequstUtil.getRealIp(request));
         User user=ContextUtil.getUserDetail();
-        article.setUser_id(user.getUserId());
+        article.setUserId(user.getUserId());
         boolean result=articleService.saveOrUpdate(article);
         RetValue<String> retValue=new RetValue<>();
         retValue.setCode(RetCodeEnum.SUCCESS.getCode());
         retValue.setMessage(RetCodeEnum.SUCCESS.getMessage());
-        retValue.setData(HttpServletRequstUtil.getBaseUrl(request)+"/article/a_"+article.getArticle_id());
+        retValue.setData(HttpServletRequstUtil.getBaseUrl(request)+"/article/a_"+article.getArticleId());
         return  retValue;
     }
 
@@ -65,7 +65,6 @@ public class ArticleController {
         ModelAndView modelAndView=new ModelAndView();
         modelAndView.setViewName("article/showarticle");
         ArticleUD article= articleService.queryArticleById(articleId);
-        Assert.notNull(article,"文章不存在了!");
         articleService.updateClick(articleId);
        modelAndView.addObject("article",article);
         return modelAndView;

@@ -4,16 +4,16 @@ import com.sane.so2o.BaseTest;
 import com.sane.so2o.entity.Article;
 import com.sane.so2o.entity.ud.ArticleUD;
 import com.sane.so2o.entity.ud.Pager;
-import com.sane.so2o.service.IArticleService;
+import com.sane.so2o.service.ArticleService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.*;
 
-public class ArticleServiceImplTest extends BaseTest {
+public class ArticleServiceImplBakTest extends BaseTest {
 
     @Autowired
-    private IArticleService articleService;
+    private ArticleService articleService;
     @Test
     public void query() {
         Pager pager=new Pager();

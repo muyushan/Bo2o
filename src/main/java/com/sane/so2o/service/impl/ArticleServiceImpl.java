@@ -7,16 +7,12 @@ import com.sane.so2o.entity.Article;
 import com.sane.so2o.dao.ArticleDao;
 import com.sane.so2o.entity.ud.ArticleUD;
 import com.sane.so2o.entity.ud.Pager;
-import com.sane.so2o.service.IArticleService;
+import com.sane.so2o.service.ArticleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.sql.Wrapper;
-import java.util.Date;
+import org.springframework.util.Assert;
 
 /**
  * <p>
@@ -24,17 +20,16 @@ import java.util.Date;
  * </p>
  *
  * @author 母玉山
- * @since 2020-05-13
+ * @since 2020-06-06
  */
-@Slf4j
 @Service
-public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> implements IArticleService {
+public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> implements ArticleService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateClick(int articleId) {
         LambdaUpdateWrapper<Article> articleLambdaUpdateWrapper= Wrappers.lambdaUpdate(new Article());
-        articleLambdaUpdateWrapper.eq(Article::getArticle_id,articleId);
+        articleLambdaUpdateWrapper.eq(Article::getArticleId,articleId);
         articleLambdaUpdateWrapper.setSql("article_click=IFNULL(article_click,0)+1");
         update(articleLambdaUpdateWrapper);
     }
@@ -49,6 +44,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
     @Override
     public ArticleUD queryArticleById(Integer articleId) {
         ArticleUD articleUD= this.baseMapper.querytById(articleId);
+        Assert.notNull(articleUD,"文章不存在了!");
         return articleUD;
     }
 }

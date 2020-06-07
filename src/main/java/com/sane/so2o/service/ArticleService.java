@@ -12,12 +12,11 @@ import com.sane.so2o.entity.ud.Pager;
  * </p>
  *
  * @author 母玉山
- * @since 2020-05-13
+ * @since 2020-06-06
  */
-public interface IArticleService extends IService<Article> {
+public interface ArticleService extends IService<Article> {
 
     public void updateClick(int articleId);
     public Page<ArticleUD> query(Article article, Pager pager);
     public ArticleUD queryArticleById(Integer articleId);
-
 }

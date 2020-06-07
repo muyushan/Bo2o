@@ -10,4 +10,5 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class ArticleUD extends Article {
     private String userName;
+    private Integer commentCount;
 }

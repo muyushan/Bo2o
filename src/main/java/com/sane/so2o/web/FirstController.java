@@ -2,7 +2,7 @@ package com.sane.so2o.web;
 
 import com.sane.so2o.entity.ud.RetValue;
 import com.sane.so2o.service.AreaService;
-import com.sane.so2o.service.IArticleService;
+import com.sane.so2o.service.ArticleService;
 import com.sane.so2o.util.HttpServletRequstUtil;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class FirstController {
     @Autowired
     private AreaService areaService;
     @Autowired
-    private IArticleService articleService;
+    private ArticleService articleService;
     @RequestMapping(value = "/login",headers ={"X-Requested-With=XMLHttpRequest"} )
     public void loginPage(HttpServletRequest request, HttpServletResponse response){
         response.setHeader("redirectUrl", HttpServletRequstUtil.getBaseUrl(request)+"/login");

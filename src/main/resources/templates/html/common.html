@@ -61,9 +61,11 @@
                         while(win != win.top){
                             win = win.top;
                         }
-                        layer.msg('该操作需要登录3秒后自动跳转登录页', {
-                            icon: 1,
-                            time: 3000 //2秒关闭（如果不配置，默认是3秒）
+                        layer.msg('该操作需要登录后才能进行,5秒后自动跳转或点击【确定】直接跳转', {
+                            icon: 2,
+                            title:'授权提示',
+                            btn:['确定'],
+                            time: 5000 //2秒关闭（如果不配置，默认是3秒）
                         }, function(){
                             win.location.href = url;
                         });
@@ -101,7 +103,10 @@
                     //         });
                     // }
                 },
-                error : function() {
+                error : function(jqXHR, textStatus, errorThrown) {
+                    // layer.alert('请求处理发生异常:请求状态:'+textStatus+"异常原因:"+errorThrown, {
+                    //                 icon : 2
+                    //             });
                 }
             });
         });

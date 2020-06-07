@@ -26,7 +26,7 @@
             </select>
         </div>
         <div class="layui-col-md1">
-            <input type="checkbox"  lay-filter="article_type" name="article_type" lay-skin="switch" checked lay-text="公开|私有">
+            <input type="checkbox"  lay-filter="articleType" name="articleType" lay-skin="switch" checked lay-text="公开|私有">
         </div>
         <div class="layui-col-md1">
             <button type="button" lay-submit style="display: inline;" lay-filter="saveBtn" th:id="saveBtn" class="layui-btn  layui-btn-normal layui-btn-radius">保存</button>
@@ -34,7 +34,7 @@
     <div class="layui-row">
         <div class="layui-col-md12 layui-btn-fluid">
             <div id="editor">
-            <textarea style="display:none;" th:name="article_content" lay-verify="required" lay-reqText="请填写文章内容"></textarea>
+            <textarea style="display:none;" th:name="articleContent" lay-verify="required" lay-reqText="请填写文章内容"></textarea>
             </div>
             <script type="text/javascript" th:inline="javascript">
                 $(function() {
@@ -47,7 +47,7 @@
                     layui.use('form', function(){
                         let form = layui.form;
                         form.on('submit(saveBtn)', function(data){
-                            data.field.article_type=data.field.article_type=="on"?1:0;
+                            data.field.articleType=data.field.articleType=="on"?1:0;
                             $.post(basePath+"article/save",data.field,function(retValue){
                                 if(retValue.code=="200"){
                                     layer.open({

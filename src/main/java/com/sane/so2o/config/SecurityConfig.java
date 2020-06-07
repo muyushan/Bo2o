@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest()
                 .authenticated()
-                .and()
+                .and().requestMatchers().and()
                 .formLogin()
                 .loginPage("/login").usernameParameter("username").passwordParameter("password")
                 .permitAll().successForwardUrl("/redirectindex").

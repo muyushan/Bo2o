@@ -37,6 +37,9 @@
                 </div>
                 <button lay-submit lay-filter="submit_btn" type="submit" class="layui-btn lay-submit layui-btn-fluid layui-btn-radius layui-btn-normal">登录</button>
                 <center>忘记密码？</center>
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
             </form>
 
         </div>

@@ -4,39 +4,58 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.sane.so2o.entity.Article">
-        <id column="article_id" property="article_id" />
-        <result column="article_name" property="article_name" />
-        <result column="article_time" property="article_time" />
-        <result column="article_ip" property="article_ip" />
-        <result column="article_click" property="article_click" />
-        <result column="sort_article_id" property="sort_article_id" />
-        <result column="user_id" property="user_id" />
-        <result column="type_id" property="type_id" />
-        <result column="article_type" property="article_type" />
-        <result column="article_content" property="article_content" />
-        <result column="article_up" property="article_up" />
-        <result column="article_support" property="article_support" />
+        <id column="article_id" property="articleId" />
+        <result column="article_name" property="articleName" />
+        <result column="article_time" property="articleTime" />
+        <result column="article_ip" property="articleIp" />
+        <result column="article_click" property="articleClick" />
+        <result column="sort_article_id" property="sortArticleId" />
+        <result column="user_id" property="userId" />
+        <result column="type_id" property="typeId" />
+        <result column="article_type" property="articleType" />
+        <result column="article_content" property="articleContent" />
+        <result column="article_up" property="articleUp" />
+        <result column="article_support" property="articleSupport" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        article_id, article_name, article_time, article_ip, article_click, sort_article_id, a.user_id, type_id, article_type, article_content, article_up, article_support
+        article_id, article_name, article_time, article_ip, article_click, sort_article_id, user_id, type_id, article_type, article_content, article_up, article_support
+    </sql>
+    <sql id="Base_Column_ListUD">
+    article_id,
+	article_name,
+	article_time,
+	article_ip,
+	article_click,
+	sort_article_id,
+	a.user_id,
+	type_id,
+	article_type,
+	article_content,
+	article_up,
+	article_support,
+	b.user_name,
+	(select count(1) FROM user_comment c WHERE a.article_id=c.commit_id) comment_count
     </sql>
 
-
     <select id="querytById" resultType="com.sane.so2o.entity.ud.ArticleUD">
-        select <include refid="Base_Column_List"></include>,b.user_name as userName from article a left join user b on a. user_id=b.user_id
+        select
+        <include refid="Base_Column_ListUD"></include>
+          from article a left join user b on a. user_id=b.user_id
         where article_id=#{id}
     </select>
 
     <select id="queryByCondiction"  resultType="com.sane.so2o.entity.ud.ArticleUD">
-        select <include refid="Base_Column_List"></include>,b.user_name AS userName from article a left join user b on a. user_id=b.user_id
-       <where>
-           <if test="article.article_id!=null">
-           and a.article_id=#{article.article_id}
-           </if>
-       </where>
-
+        select
+        <include refid="Base_Column_ListUD"></include>
+          from article a left join user b on a.user_id=b.user_id
+        <where>
+            <if test="article.articleId!=null">
+                and a.article_id=#{article.articleId}
+            </if>
+        </where>
         order by a.article_click desc,a.article_time desc
     </select>
+
 </mapper>

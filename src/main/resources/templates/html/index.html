@@ -37,15 +37,15 @@
                         success:function(res){
                             pageSize=3;
                             layui.each(res.records, function(index, item){
-                                lis.push("<div class=\"layui-card\" data-articleid='"+item.article_id+"'>\n" +
-                                    "                <div class=\"layui-card-header\">"+item.article_name+"</div>\n" +
-                                    "                <div class=\"layui-card-body\">\n"+item.article_content+"</div>\n" +
+                                lis.push("<div class=\"layui-card\" data-articleid='"+item.articleId+"'>\n" +
+                                    "                <div class=\"layui-card-header\">"+item.articleName+"</div>\n" +
+                                    "                <div class=\"layui-card-body\">\n"+item.articleContent+"</div>\n" +
                                     "                <div class=\"layui-card-fotter\">\n" +
                                     "                    <i class=\"layui-icon layui-icon-username\">"+item.userName+"</i>\n" +
-                                    "                    <i class=\"layui-icon layui-icon-time\">"+new Date(item.article_time).Format('yyyy-MM-dd hh:mm:ss')+"</i>\n" +
+                                    "                    <i class=\"layui-icon layui-icon-time\">"+new Date(item.articleTime).Format('yyyy-MM-dd hh:mm:ss')+"</i>\n" +
                                     "                    <i class=\"layui-icon layui-icon-praise\"></i>\n" +
-                                    "                    <i class=\"layui-icon layui-icon-reply-fill\"></i>\n" +
-                                    "                    <i class=\"layui-icon layui-icon-read\">"+(item.article_click==null?"0":item.article_click)+"</i>\n" +
+                                    "                    <i class=\"layui-icon layui-icon-reply-fill\">"+item.commentCount+"</i>\n" +
+                                    "                    <i class=\"layui-icon layui-icon-read\">"+(item.articleClick==null?"0":item.articleClick)+"</i>\n" +
                                     "                </div>\n" +
                                     "            </div>");
                             });

@@ -19,7 +19,7 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.DefaultTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("userDetailService")
     @Autowired
@@ -37,22 +37,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         super.configure(web);
     }
 
+    /**
+     * 关于SpringSecurity 请求缓存 的一点记录：
+     * 请求地址以/favicon.ico结尾
+     * header中的content-type值为application/json
+     * header中的X-Requested-With值为XMLHttpRequest
+     * 以上三种请求是不进行缓存的
+     * @param http
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/js/**","/css/**","/images/**","/layui/**","/mdeditor/**","/signup","/redirectindex","/index","/user/validate/*","/user/regist","/user/sendregistcode","/article/list","/article/a_{articleId}")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and().requestMatchers().and()
-                .formLogin()
-                .loginPage("/login").usernameParameter("username").passwordParameter("password")
-                .permitAll().successForwardUrl("/redirectindex").
-                and().logout().logoutSuccessUrl("/index")
-                .invalidateHttpSession(true).clearAuthentication(true)
-                .and().rememberMe().key(saltkey).userDetailsService(userDetailsService).and()
-                .csrf()
-                .disable();
+        http.authorizeRequests().antMatchers("/js/**","/css/**","/images/**","/layui/**").permitAll();
+        http.authorizeRequests().antMatchers("/mdeditor/**","/signup","/redirectindex","/index","/user/validate/*","/user/regist","/user/sendregistcode","/article/list","/article/a_{articleId}").permitAll();
+        http.authorizeRequests().antMatchers("/signup","/redirectindex","/index","/user/validate/*","/user/regist","/user/sendregistcode","/article/list","/article/a_{articleId}").permitAll();
+        http.authorizeRequests().anyRequest().authenticated();
+        http.rememberMe().key(saltkey).userDetailsService(userDetailsService);
+        http.formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/index");
+        http.logout().logoutSuccessUrl("/index").invalidateHttpSession(true).clearAuthentication(true);
+        http.csrf().disable();
     }
 
     @Bean

@@ -47,8 +47,4 @@ public class FirstController {
     public String index(){
     return "/index";
     }
-    @RequestMapping("/redirectindex")
-    public String redirectIndex(){
-        return "redirect:/index";
-    }
 }

@@ -31,9 +31,9 @@
 /**
 解决layui 和edit.md 同时使用时导致有序列表和无序列表无法正常渲染的问题
  */
-ol>li{
+.editormd-html-preview ol>li{
     list-style: decimal !important;
 }
-ul>li{
+.editormd-html-preview ul>li{
     list-style: disc !important;
 }

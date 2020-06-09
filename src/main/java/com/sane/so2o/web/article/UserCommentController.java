@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -55,7 +56,13 @@ public class UserCommentController {
         userCommentService.save(userComment);
         retValue.setCode(RetCodeEnum.SUCCESS.getCode());
         return  retValue;
-
+    }
+    @RequestMapping("listByArticleId")
+    @ResponseBody
+    public List<UserComment> queryArticleComment(int articleId){
+        LambdaQueryWrapper<UserComment> commentQueryWrapper=Wrappers.lambdaQuery(UserComment.class).eq(UserComment::getCommitId,articleId).orderByDesc(UserComment::getCId);
+        List<UserComment> userCommentList=userCommentService.list(commentQueryWrapper);
+        return userCommentList;
 
     }
 }

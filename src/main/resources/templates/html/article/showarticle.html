@@ -31,13 +31,20 @@
             </blockquote>
             <div id="editormd-view" style="width: 98%;margin: 0 auto; overflow: scroll;">
             </div>
-        </div>
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>评论</legend>
+            <div id="commentList" class="layui-field-box">
+                <ul class="layui-timeline">
+                </ul>
+            </div>
+        </fieldset>
+    </div>
 </div>
-    <div class="layui-row layui-col-space10">
+<div class="layui-row layui-col-space10">
         <form class="layui-form">
             <input type="hidden" value="" name="commitId" id="articleId">
         <div id="commentEditor">
-            <textarea lay-verify="required" lay-reqText="请输入您的评论内容" style="display:none;" th:name="commitContent"></textarea>
+            <textarea  lay-verify="required" lay-reqText="请输入您的评论内容" style="display:none;" th:name="commitContent"></textarea>
         </div>
             <button type="button" lay-submit style="display: none;" lay-filter="saveBtn" th:id="saveCommentBtn" class="layui-btn  layui-btn-normal layui-btn-radius">评论</button>
         </form>
@@ -94,6 +101,7 @@
                     success:function(retValue){
                         if(retValue.code=="200"){
                             layer.msg("保存完成");
+                            commentEditor.clear();
                         }else{
                             layer.alert(retValue.message,{icon: 5});
                         }
@@ -102,8 +110,35 @@
             });
 
         });
+        $("document").ready(function(){
+            let articleId=$("#articleId").val();
+            $.get(basePath+"userComment/listByArticleId?articleId="+articleId,function (comments) {
+               if(comments!=null&&comments instanceof Array){
+                comments.forEach(function(item,index){
+                    $("#commentList>ul").append("<li class=\"layui-timeline-item\">\n" +
+                        "                        <i class=\"layui-icon layui-timeline-axis\">&#xe63f;</i>\n" +
+                        "                        <div class=\"layui-timeline-content layui-text\">\n" +
+                        "                            <h3 class=\"layui-timeline-title\">"+new Date(item.commitTime).Format("yyyy-MM-dd")+"</h3>\n" +
+                        "                            <p id='coment_id_"+item.cid+"'>\n"+
+                        "                            </p>\n" +
+                        "                        </div>\n" +
+                        "                    </li>");
+                    editormd.markdownToHTML("coment_id_"+item.cid, {
+                        markdown        : item.commitContent,
+                        htmlDecode      : "style,script,iframe",  // you can filter tags decode
+                        tocm            : true,    // Using [TOCM]
+                        emoji           : true,
+                        taskList        : true,
+                        tex             : true,  // 默认不解析
+                        flowChart       : true,  // 默认不解析
+                        sequenceDiagram : true,  // 默认不解析
+                        width  : "100%"
+                    });
+                });
+               }
+            });
+        });
     </script>
-
 </div>
 <div class="layui-fluid" th:replace="common::footer">
 </div>

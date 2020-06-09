@@ -43,14 +43,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * header中的content-type值为application/json
      * header中的X-Requested-With值为XMLHttpRequest
      * 以上三种请求是不进行缓存的
+     * .defaultSuccessUrl("/index"); 这个是登录成功后自动重定向到index,如果有缓存的请求会调转到缓存的请求
+     * .successForwardUrl();这个是登录成功后转发到index
+     *
      * @param http
      * @throws Exception
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/js/**","/css/**","/images/**","/layui/**").permitAll();
-        http.authorizeRequests().antMatchers("/mdeditor/**","/signup","/redirectindex","/index","/user/validate/*","/user/regist","/user/sendregistcode","/article/list","/article/a_{articleId}").permitAll();
-        http.authorizeRequests().antMatchers("/signup","/redirectindex","/index","/user/validate/*","/user/regist","/user/sendregistcode","/article/list","/article/a_{articleId}").permitAll();
+        http.authorizeRequests().antMatchers("/mdeditor/**").permitAll();
+        http.authorizeRequests().antMatchers("/signup","/redirectindex","/index","/user/validate/*","/user/regist","/user/sendregistcode","/article/list","/userComment/listByArticleId","/article/a_{articleId}").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.rememberMe().key(saltkey).userDetailsService(userDetailsService);
         http.formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/index");

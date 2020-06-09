@@ -131,7 +131,7 @@ public class ShopServiceImpl implements ShopService {
     }
 
     private void addShopImg(Shop shop, MultipartFile shopImg) throws IOException {
-       String dest= PathUtil.getShopImagePath(shop.getShopId());
+       String dest= PathUtil.getUserImagePath(shop.getShopId());
         String shopImgAddr=ImgUtil.generateThumbnail(shopImg,dest);
         shop.setShopImg(shopImgAddr);
     }

@@ -1,32 +1,14 @@
 package com.sane.so2o.entity.ud;
 
+import lombok.Data;
+
+@Data
 public class RetValue<T> {
 
     private String code;
+    private Integer success;
     private String message;
+    private String url;
     private T data;
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
 }

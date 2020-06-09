@@ -9,17 +9,17 @@ public class PathUtil {
         String userName=System.getProperty("user.name");
         String basePath="";
         if(osName.toLowerCase().startsWith("win")){
-            basePath="D:/o2o/image";
+            basePath="D:/blog/";
         }else{
-            basePath="/Users/"+userName+"/o2o/image";
+            basePath="/Users/"+userName+"/blog/";
         }
 
         basePath=basePath.replace("/", seperator);
         return  basePath;
     }
 
-    public static String  getShopImagePath(long shopId){
-        String imagePath="/upload/images/item/shop/"+shopId+"/";
+    public static String  getUserImagePath(long userId){
+        String imagePath="/upload/item/user/"+userId+"/";
         return imagePath.replaceAll("/",seperator);
     }
 }

@@ -42,7 +42,11 @@
                         placeholder:"开始创作吧",
                         width  : "100%",
                         height : 500,
-                        path   : basePath+"mdeditor/lib/"
+                        path: basePath+"mdeditor/lib/",
+                        imageUpload:'true',
+                        imageFormats:["jpg", "jpeg", "gif", "png", "bmp", "webp22"],
+                        imageUploadURL:basePath+"article/upload"
+
                     });
                     layui.use('form', function(){
                         let form = layui.form;

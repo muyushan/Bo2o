@@ -19,7 +19,7 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.DefaultTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity(debug = false)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("userDetailService")
     @Autowired
@@ -59,6 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/index");
         http.logout().logoutSuccessUrl("/index").invalidateHttpSession(true).clearAuthentication(true);
         http.csrf().disable();
+        http.headers().frameOptions().sameOrigin();
+
     }
 
     @Bean

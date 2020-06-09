@@ -11,20 +11,23 @@ import com.sane.so2o.enums.RetCodeEnum;
 import com.sane.so2o.service.ArticleService;
 import com.sane.so2o.util.ContextUtil;
 import com.sane.so2o.util.HttpServletRequstUtil;
+import com.sane.so2o.util.ImgUtil;
+import com.sane.so2o.util.PathUtil;
+import lombok.extern.java.Log;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Date;
 
 @Controller
+@Log
 @RequestMapping("article")
 public class ArticleController {
     @Autowired
@@ -46,6 +49,18 @@ public class ArticleController {
         retValue.setCode(RetCodeEnum.SUCCESS.getCode());
         retValue.setMessage(RetCodeEnum.SUCCESS.getMessage());
         retValue.setData(HttpServletRequstUtil.getBaseUrl(request)+"/article/a_"+article.getArticleId());
+        return  retValue;
+    }
+@RequestMapping("upload")
+@ResponseBody
+    public RetValue<String> uploadImg(@RequestParam("editormd-image-file") MultipartFile multipartFile) throws IOException {
+        RetValue<String> retValue=new RetValue<>();
+        Assert.notNull(multipartFile);
+        String destPath=PathUtil.getUserImagePath(ContextUtil.getUserDetail().getUserId());
+        String path= ImgUtil.generateThumbnail(multipartFile,destPath);
+        retValue.setMessage("成功");
+        retValue.setUrl("image"+path);
+        retValue.setSuccess(1);
         return  retValue;
     }
 

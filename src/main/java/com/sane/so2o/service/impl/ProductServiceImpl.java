@@ -183,7 +183,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private String saveImage(Product product, MultipartFile img) throws IOException {
-        String destPath=PathUtil.getShopImagePath(product.getShop().getShopId());
+        String destPath=PathUtil.getUserImagePath(product.getShop().getShopId());
         String path=ImgUtil.generateThumbnail(img,destPath);
 
         return path;

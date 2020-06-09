@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice
 public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler
-//    @ResponseBody
     public ModelAndView handlerException(Exception e){
         RetValue<String> retValue=new RetValue<>();
         retValue.setCode(RetCodeEnum.FAIL.getCode());

@@ -144,7 +144,7 @@ public class ProductController {
     @RequestMapping("/static/images/**/{imageName}.{suffix}")
     public void getImge(@PathVariable(value = "imageName") String imageName, @PathVariable(value ="suffix") String suffix, HttpServletResponse response, HttpServletRequest request) throws IOException {
         Shop currentShop= (Shop) request.getSession().getAttribute("shop");
-        String imagePath=PathUtil.getShopImagePath(currentShop.getShopId());
+        String imagePath=PathUtil.getUserImagePath(currentShop.getShopId());
         String path=PathUtil.getImageStoreBasePath()+imagePath+imageName+"."+suffix;
         response.setDateHeader("Expires",0);
         response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");

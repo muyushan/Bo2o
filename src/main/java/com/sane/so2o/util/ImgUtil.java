@@ -22,7 +22,7 @@ public class ImgUtil {
         makDirPath(targetAddr);
         String relativeAddr=targetAddr+realFileName+extension;
         File dest=new File(PathUtil.getImageStoreBasePath()+relativeAddr);
-        Thumbnails.of(multipartFile.getInputStream()).size(200,200).watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(bathPath + "/water.jpeg")), 0.5f).outputQuality(0.8f).toFile(dest);
+        Thumbnails.of(multipartFile.getInputStream()).size(1280,1024).watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(bathPath + "/waterpic.jpg")), 0.5f).outputQuality(0.8f).toFile(dest);
         return  relativeAddr;
 
     }

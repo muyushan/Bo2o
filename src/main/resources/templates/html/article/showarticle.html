@@ -102,6 +102,8 @@
                         if(retValue.code=="200"){
                             layer.msg("保存完成");
                             commentEditor.clear();
+                            loadComments();
+
                         }else{
                             layer.alert(retValue.message,{icon: 5});
                         }
@@ -111,33 +113,38 @@
 
         });
         $("document").ready(function(){
+            loadComments();
+        });
+
+        function loadComments(){
             let articleId=$("#articleId").val();
             $.get(basePath+"userComment/listByArticleId?articleId="+articleId,function (comments) {
-               if(comments!=null&&comments instanceof Array){
-                comments.forEach(function(item,index){
-                    $("#commentList>ul").append("<li class=\"layui-timeline-item\">\n" +
-                        "                        <i class=\"layui-icon layui-timeline-axis\">&#xe63f;</i>\n" +
-                        "                        <div class=\"layui-timeline-content layui-text\">\n" +
-                        "                            <h3 class=\"layui-timeline-title\">"+new Date(item.commitTime).Format("yyyy-MM-dd")+"</h3>\n" +
-                        "                            <p id='coment_id_"+item.cid+"'>\n"+
-                        "                            </p>\n" +
-                        "                        </div>\n" +
-                        "                    </li>");
-                    editormd.markdownToHTML("coment_id_"+item.cid, {
-                        markdown        : item.commitContent,
-                        htmlDecode      : "style,script,iframe",  // you can filter tags decode
-                        tocm            : true,    // Using [TOCM]
-                        emoji           : true,
-                        taskList        : true,
-                        tex             : true,  // 默认不解析
-                        flowChart       : true,  // 默认不解析
-                        sequenceDiagram : true,  // 默认不解析
-                        width  : "100%"
+                if(comments!=null&&comments instanceof Array){
+                    $("#commentList>ul").empty();
+                    comments.forEach(function(item,index){
+                        $("#commentList>ul").append("<li class=\"layui-timeline-item\">\n" +
+                            "                        <i class=\"layui-icon layui-timeline-axis\">&#xe63f;</i>\n" +
+                            "                        <div class=\"layui-timeline-content layui-text\">\n" +
+                            "                            <h3 class=\"layui-timeline-title\">"+new Date(item.commitTime).Format("yyyy-MM-dd")+"</h3>\n" +
+                            "                            <p id='coment_id_"+item.cid+"'>\n"+
+                            "                            </p>\n" +
+                            "                        </div>\n" +
+                            "                    </li>");
+                        editormd.markdownToHTML("coment_id_"+item.cid, {
+                            markdown        : item.commitContent,
+                            htmlDecode      : "style,script,iframe",  // you can filter tags decode
+                            tocm            : true,    // Using [TOCM]
+                            emoji           : true,
+                            taskList        : true,
+                            tex             : true,  // 默认不解析
+                            flowChart       : true,  // 默认不解析
+                            sequenceDiagram : true,  // 默认不解析
+                            width  : "100%"
+                        });
                     });
-                });
-               }
+                }
             });
-        });
+        }
     </script>
 </div>
 <div class="layui-fluid" th:replace="common::footer">

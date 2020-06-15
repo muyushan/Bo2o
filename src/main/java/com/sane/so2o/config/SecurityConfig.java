@@ -54,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/js/**","/css/**","/images/**","/layui/**").permitAll();
         http.authorizeRequests().antMatchers("/mdeditor/**").permitAll();
         http.authorizeRequests().antMatchers("/signup","/redirectindex","/index","/user/validate/*","/user/regist","/user/sendregistcode","/article/list","/userComment/listByArticleId","/article/a_{articleId}").permitAll();
+        http.authorizeRequests().antMatchers("/image/**").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.rememberMe().key(saltkey).userDetailsService(userDetailsService);
         http.formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/index");

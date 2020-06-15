@@ -1,5 +1,6 @@
 package com.sane.so2o.web.article;
 
+import com.alibaba.druid.util.HttpClientUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sane.so2o.entity.Article;
@@ -8,16 +9,20 @@ import com.sane.so2o.entity.ud.ArticleUD;
 import com.sane.so2o.entity.ud.Pager;
 import com.sane.so2o.entity.ud.RetValue;
 import com.sane.so2o.enums.RetCodeEnum;
+import com.sane.so2o.exceptions.UploadException;
 import com.sane.so2o.service.ArticleService;
 import com.sane.so2o.util.ContextUtil;
 import com.sane.so2o.util.HttpServletRequstUtil;
 import com.sane.so2o.util.ImgUtil;
 import com.sane.so2o.util.PathUtil;
 import lombok.extern.java.Log;
+import org.apache.http.client.HttpClient;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Properties;
 
 @Controller
 @Log
@@ -53,17 +59,21 @@ public class ArticleController {
     }
 @RequestMapping("upload")
 @ResponseBody
-    public RetValue<String> uploadImg(@RequestParam("editormd-image-file") MultipartFile multipartFile) throws IOException {
+    public RetValue<String> uploadImg(@RequestParam("editormd-image-file") MultipartFile multipartFile,HttpServletRequest request) throws UploadException {
         RetValue<String> retValue=new RetValue<>();
-        Assert.notNull(multipartFile);
-        String destPath=PathUtil.getUserImagePath(ContextUtil.getUserDetail().getUserId());
-        String path= ImgUtil.generateThumbnail(multipartFile,destPath);
-        retValue.setMessage("成功");
-        retValue.setUrl("image"+path);
-        retValue.setSuccess(1);
+        String path="";
+        try{
+            Assert.notNull(multipartFile,"上传的文件不能为空");
+            retValue=articleService.uploadImage(multipartFile);
+//            String destPath=PathUtil.getUserImagePath(ContextUtil.getUserDetail().getUserId());
+//            path= ImgUtil.generateThumbnail(multipartFile,destPath);
+//            retValue.setUrl(HttpServletRequstUtil.getBaseUrl(request)+"/image"+path);
+//            retValue.setSuccess(1);
+        }catch (Exception ex){
+            throw new UploadException(ex.getMessage());
+        }
         return  retValue;
     }
-
     @ResponseBody
     @RequestMapping(value = "list")
     public Page<ArticleUD> queryArticles(Article article, Pager pager){

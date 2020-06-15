@@ -13,10 +13,10 @@
     <form class="layui-form" th:action="@{article/save}">
     <div class="layui-row layui-col-space10" style="padding-top:2px;">
         <div class="layui-col-md5">
-            <input th:id="article_title" type="text" name="article_name" lay-verify="required" lay-reqText="请填写标题" placeholder="请输入标题" autocomplete="off" class="layui-input">
+            <input th:id="articleName" type="text" name="articleName" lay-verify="required" lay-reqText="请填写标题" placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
         <div class="layui-col-md3">
-            <select name="type_id" id="category" lay-verify="required" lay-reqText="请选择分类">
+            <select name="typeId" id="category" lay-verify="required" lay-reqText="请选择分类">
                 <option value="">请选择文章分类</option>
                 <option value="1">Java</option>
                 <option value="2">Linux</option>

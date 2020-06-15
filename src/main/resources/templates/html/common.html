@@ -137,8 +137,7 @@
         <ul class="layui-nav layui-layout-right" style="background-color:white;" sec:authorize="isAuthenticated()">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-
-                    <img src="https://sane-bucket.oss-cn-beijing.aliyuncs.com/IMG_4185.jpg" class="layui-nav-img">
+                    <img id="avatar" class="layui-nav-img">
                     <span sec:authentication="name"></span>
                 </a>
                 <dl class="layui-nav-child">
@@ -153,6 +152,9 @@
             <li class="layui-nav-item"><a th:href="@{/login}">登录</a></li>
         </ul>
     </div>
+    <script type="application/javascript">
+        getUserAvatar();
+    </script>
 </div>
 
 </div>
@@ -163,7 +165,7 @@
             ©2020 muyushan<a href="http://www.beian.miit.gov.cn/" target="_blank">京ICP备20014790号</a>
         </div>
     </div>
-</div>
 
+</div>
 </body>
 </html>

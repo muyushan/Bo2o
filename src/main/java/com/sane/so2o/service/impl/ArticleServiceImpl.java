@@ -26,6 +26,7 @@ import okhttp3.*;
 import com.aliyun.oss.common.auth.Credentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,6 +80,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
         return articleUD;
     }
 
+    @CacheEvict(value = "article" ,key ="#article.articleId",condition ="#article.articleId!=null")
+    @Override
+    public boolean saveOrUpdateMD(Article article) {
+       return saveOrUpdate(article);
+    }
+
     @Override
     public RetValue<String> uploadImage(MultipartFile file) throws IOException {
         RetValue<String> retValue = new RetValue<>();
@@ -95,11 +102,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
         catch (Exception ex){
             retValue.setSuccess(0);
             retValue.setMessage("上传文件失败:"+ex.getMessage());
-        }finally {
-            ossClient.shutdown();
         }
-
-
         return retValue;
     }
 }

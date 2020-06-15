@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       class="pixel-ratio-2 retina">
 <head th:replace="common::pagehead">
     <title>文章展示</title>
@@ -28,6 +29,16 @@
                <i class="layui-icon layui-icon-time" id="postTime"></i>
                <i class="layui-icon layui-icon-read" id="clickCount"></i>
                <i class="layui-icon layui-icon-reply-fill" id="commentCount"></i>
+                <button th:id="editButton"  sec:authorize="isAuthenticated()" th:if="${isOwner}"  type="button" class="layui-btn layui-btn-radius layui-btn-normal right-align" style="top:70px;">编辑</button>
+
+                <script language='javascript' th:inline="javascript">
+                   $("#editButton").click(function(){
+                       let articleId = [[${article.articleId}]];
+                       document.location.href =basePath+"article/edit_a"+articleId ;
+                   });
+                </script>
+
+
             </blockquote>
             <div id="editormd-view" style="width: 98%;margin: 0 auto; overflow: scroll;">
             </div>

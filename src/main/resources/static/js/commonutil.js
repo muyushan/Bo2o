@@ -88,3 +88,11 @@ function scrollToElement(elementId){
 		scrollTop: tScrollTop
 	}, 1000);
 }
+
+function getUserAvatar(){
+	$.getJSON(basePath+"user/avatar",{},function(returnVal){
+		if(returnVal.data!=""){
+			$("#avatar").attr("src",returnVal.data);
+		}
+	});
+}

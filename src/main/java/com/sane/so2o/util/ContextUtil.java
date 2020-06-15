@@ -21,6 +21,7 @@ public class ContextUtil {
         Assert.notNull(principal,"当前登录信息为空，请重新登录");
         if(principal instanceof SecurityUser){
             SecurityUser securityUser= ((SecurityUser) principal);
+
             return securityUser.getDetail();
         }
         return null;

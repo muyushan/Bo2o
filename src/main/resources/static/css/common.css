@@ -37,3 +37,6 @@
 .editormd-html-preview ul>li{
     list-style: disc !important;
 }
+.right-align{
+    position:absolute!important;right:10px;
+}

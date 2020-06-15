@@ -19,8 +19,10 @@ import lombok.extern.java.Log;
 import org.apache.http.client.HttpClient;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
@@ -40,17 +43,29 @@ public class ArticleController {
     private ArticleService articleService;
     @RequestMapping(value = "new",method = RequestMethod.GET)
     public String newArticle(){
-        AopContext.currentProxy();
+        return "article/createnewarticle";
+    }
+
+    @RequestMapping(value = "edit_a{articleId}",method = RequestMethod.GET)
+    public String editArticle(@PathVariable("articleId") Integer articleId, ModelMap modelMap){
+        User user=ContextUtil.getUserDetail();
+        ArticleUD article= articleService.queryArticleById(articleId);
+        modelMap.addAttribute("article",article);
+        Assert.notNull(user,"请先登录系统");
+        Assert.notNull(article,"没有查询到要修改的文章内容");
+        Assert.isTrue(article.getUserId().intValue()==article.getUserId().intValue(),"当前用户不具备修改该文章的权限");
         return "article/createnewarticle";
     }
     @ResponseBody
     @RequestMapping(value = "save",method = RequestMethod.POST)
     public RetValue<String> saveArticle(Article article, HttpServletRequest request){
-        article.setArticleTime(new Date());
-        article.setArticleIp(HttpServletRequstUtil.getRealIp(request));
-        User user=ContextUtil.getUserDetail();
-        article.setUserId(user.getUserId());
-        boolean result=articleService.saveOrUpdate(article);
+       if(article.getArticleId()==null){
+           article.setArticleTime(new Date());
+           article.setArticleIp(HttpServletRequstUtil.getRealIp(request));
+           User user=ContextUtil.getUserDetail();
+           article.setUserId(user.getUserId());
+       }
+        boolean result=articleService.saveOrUpdateMD(article);
         RetValue<String> retValue=new RetValue<>();
         retValue.setCode(RetCodeEnum.SUCCESS.getCode());
         retValue.setMessage(RetCodeEnum.SUCCESS.getMessage());
@@ -65,10 +80,6 @@ public class ArticleController {
         try{
             Assert.notNull(multipartFile,"上传的文件不能为空");
             retValue=articleService.uploadImage(multipartFile);
-//            String destPath=PathUtil.getUserImagePath(ContextUtil.getUserDetail().getUserId());
-//            path= ImgUtil.generateThumbnail(multipartFile,destPath);
-//            retValue.setUrl(HttpServletRequstUtil.getBaseUrl(request)+"/image"+path);
-//            retValue.setSuccess(1);
         }catch (Exception ex){
             throw new UploadException(ex.getMessage());
         }
@@ -86,12 +97,18 @@ public class ArticleController {
         return  articlePage;
     }
     @RequestMapping("/a_{articleId}")
-    public ModelAndView queryArticleById(@PathVariable Integer articleId){
+    public ModelAndView queryArticleById(@PathVariable Integer articleId, HttpSession session){
+        User user=ContextUtil.getUserDetail();
         ModelAndView modelAndView=new ModelAndView();
         modelAndView.setViewName("article/showarticle");
         ArticleUD article= articleService.queryArticleById(articleId);
         articleService.updateClick(articleId);
        modelAndView.addObject("article",article);
+       if(user!=null){
+           modelAndView.addObject("isOwner",article.getUserId().intValue()==user.getUserId().intValue());
+       }else{
+           modelAndView.addObject("isOwner",false);
+       }
         return modelAndView;
     }
 }

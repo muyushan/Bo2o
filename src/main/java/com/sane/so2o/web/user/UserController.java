@@ -6,6 +6,7 @@ import com.sane.so2o.entity.ud.RetValue;
 import com.sane.so2o.entity.ud.UserUD;
 import com.sane.so2o.enums.RetCodeEnum;
 import com.sane.so2o.service.UserService;
+import com.sane.so2o.util.ContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,6 +58,17 @@ public class UserController {
     public RetValue registPost(String userName,String email) {
         RetValue retValue=userService.sendEmailVerifyCode(userName,email);
         return retValue;
+    }
+    @ResponseBody
+    @RequestMapping("/avatar")
+    public  RetValue<String> getUserAvatarUrl(){
+        RetValue retValue=new RetValue();
+        User user=ContextUtil.getUserDetail();
+        retValue.setCode(RetCodeEnum.SUCCESS.getCode());
+        if(user!=null){
+            retValue.setData(user.getUserImageUrl());
+        }
+        return  retValue;
     }
 }
 

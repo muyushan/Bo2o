@@ -10,7 +10,8 @@
 
 <div th:replace="common.html::header"></div>
 <div class="layui-fluid">
-    <form class="layui-form" th:action="@{article/save}">
+    <form class="layui-form" lay-filter="articleForm" th:action="@{article/save}">
+        <input type="hidden" name="articleId"/>
     <div class="layui-row layui-col-space10" style="padding-top:2px;">
         <div class="layui-col-md5">
             <input th:id="articleName" type="text" name="articleName" lay-verify="required" lay-reqText="请填写标题" placeholder="请输入标题" autocomplete="off" class="layui-input">
@@ -44,12 +45,20 @@
                         height : 500,
                         path: basePath+"mdeditor/lib/",
                         imageUpload:'true',
-                        imageFormats:["jpg", "jpeg", "gif", "png", "bmp", "webp22"],
+                        imageFormats:["jpg", "jpeg", "gif", "png", "bmp"],
                         imageUploadURL:basePath+"article/upload"
-
                     });
+                    debugger;
+                    let articleId = [[${article.articleId}]];
+                    let articleContent = [[${article.articleContent}]];
+                    let typeId = [[${article.typeId}]];
+                    let articleType = [[${article.articleType}]];
+                    let articleName = [[${article.articleName}]];
                     layui.use('form', function(){
                         let form = layui.form;
+                        if(articleId!=null){
+                            form.val("articleForm",{"articleId":articleId,"articleName":articleName,"articleContent":articleContent,"typeId":typeId,"articleType":articleType==1?"on":"off"})
+                        }
                         form.on('submit(saveBtn)', function(data){
                             data.field.articleType=data.field.articleType=="on"?1:0;
                             $.post(basePath+"article/save",data.field,function(retValue){
@@ -67,6 +76,7 @@
                         });
 
                     });
+
                 });
             </script>
         </div>

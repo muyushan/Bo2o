@@ -24,5 +24,6 @@ public interface ArticleService extends IService<Article> {
     public void updateClick(int articleId);
     public Page<ArticleUD> query(Article article, Pager pager);
     public ArticleUD queryArticleById(Integer articleId);
+    public boolean saveOrUpdateMD(Article article);
     public RetValue<String> uploadImage(MultipartFile file) throws IOException;
 }

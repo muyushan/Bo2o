@@ -213,6 +213,11 @@
             <artifactId>spring-aspects</artifactId>
             <version>5.1.15.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.tobato</groupId>
+            <artifactId>fastdfs-client</artifactId>
+            <version>1.26.4</version>
+        </dependency>
     </dependencies>
 
 

@@ -11,8 +11,8 @@ public class Hello {
     @Autowired
     private Sender sender;
     @RequestMapping(value = "/hello",method = RequestMethod.GET)
-    public  String  hello(Long time){
-        sender.sendMessage(time);
+    public  String  hello(String message,String key){
+        sender.sendMessage(message, key);
         return "hello springboot";
     }
 }

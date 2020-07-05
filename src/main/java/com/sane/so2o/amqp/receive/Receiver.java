@@ -12,11 +12,10 @@ import java.util.concurrent.TimeUnit;
 
 @Log
 @Component
-@RabbitListener(queues = {"FIRST"})
+@RabbitListener(queues = {"queue_log_file"})
 public class Receiver {
     @RabbitHandler
-    public void  processMessage(Long seconds) throws InterruptedException {
-        log.info(String.format("Receiver1==rabbitmessage:%s",seconds.toString()));
-        TimeUnit.SECONDS.sleep(seconds);
+    public void  processMessage(String message) throws InterruptedException {
+        log.info(String.format("Receiver1==rabbitmessage:%s",message));
     }
 }

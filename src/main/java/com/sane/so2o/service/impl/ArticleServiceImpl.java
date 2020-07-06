@@ -20,6 +20,7 @@ import com.sane.so2o.entity.Article;
 import com.sane.so2o.entity.ud.ArticleUD;
 import com.sane.so2o.entity.ud.Pager;
 import com.sane.so2o.entity.ud.RetValue;
+import com.sane.so2o.proxy.FileUploadProxy;
 import com.sane.so2o.service.ArticleService;
 import lombok.extern.java.Log;
 import okhttp3.*;
@@ -50,12 +51,8 @@ import java.util.Date;
 public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> implements ArticleService {
 
 
-    @Value("${aliyun.oss.bucket}")
-    private String aliyun_oss_bucket;
-    @Value("${aliyun.oss.url}")
-    private String aliyun_oss_url;
-    @Autowired
-    private OSS ossClient;
+   @Autowired
+    private FileUploadProxy fileUploadProxy;
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateClick(int articleId) {
@@ -90,10 +87,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
     public RetValue<String> uploadImage(MultipartFile file) throws IOException {
         RetValue<String> retValue = new RetValue<>();
         try{
-            PutObjectResult result = ossClient.putObject(aliyun_oss_bucket, "blog/"+file.getOriginalFilename(), file.getInputStream());
-            if (!StringUtils.isEmpty(result.getETag())) {
+           String path=fileUploadProxy.upload(file);
+            if (!StringUtils.isEmpty(path)) {
                 retValue.setSuccess(1);
-                retValue.setUrl(aliyun_oss_url+"/blog/"+file.getOriginalFilename());
+                retValue.setUrl(path);
             } else {
                 retValue.setSuccess(0);
                 retValue.setMessage("上传失败");
